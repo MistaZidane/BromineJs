@@ -96,7 +96,7 @@ function Button({ child, color, bgColor }) {
     return ele;
 }
 // Container widget
-function container({ children, color, bgColor, tagtype }) {
+function Container({ children, color, bgColor, tagtype }) {
     // supported tags
     // make sure you create the element before creating the children
     let supportedTags = ['div', 'span', 'nav', 'aside', 'section'];
@@ -431,7 +431,7 @@ function Canvas({ width, height, id, script }) {
     return element;
 };
 // the Table widget
-function Table({ headers, data, colspan, rowspan, children }) {
+function Table({ headers, children }) {
     let tbl = new Widget();
     tbl.type = 'table';
     let ele = tbl.CreateWidget();
@@ -462,15 +462,72 @@ function Table({ headers, data, colspan, rowspan, children }) {
     tbl.CreateChildren(children);
     return ele;
 }
-
-// the table
+// the TableRow widget
+function TableRow({ children, id }) {
+    let tr = new Widget();
+    tr.type = 'tr';
+    let ele = tr.CreateWidget();
+    tr.CreateChildren(children);
+    return ele;
+}
+// the TableCell()
+function TableCell({ child }) {
+    let td = new Widget();
+    td.type = 'td';
+    let ele = td.CreateWidget();
+    if (child != undefined) {
+        ele.innerHTML = child
+    }
+    return ele;
+}
+// the Code() widget
+function Code({ child }) {
+    let code = new Widget();
+    code.type = 'code';
+    let ele = code.CreateWidget();
+    if (child != undefined) {
+        ele.innerHTML = child;
+    }
+    return ele;
+}
+// the Pre({}) widget
+function Pre({child}){
+    let pre = new Widget();
+    pre.type = 'pre';
+    let ele = pre.CreateWidget();
+    if (child != undefined) {
+        ele.innerHTML = child;
+    }
+    return ele;
+}
 let dd = [2, 3, 4, 5, 6, 7, 7, 8];
 document.body.appendChild(
-    container({
+    Container({
         tagtype: 'div',
         children: [
+            Pre({
+                child: "<p> ssfssdf </p>"
+            }),
+            Code({
+                child: '<p>vdvdv dvdv</p>'
+            }),
+            Container({
+                tagtype: 'section',
+                children: [
+                    Line({
+
+                    }),
+                    TableRow({
+                        children: [
+                            TableCell({
+                                child: 'Table cell'
+                            })
+                        ]
+                    })
+                ]
+            }),
             Text({
-                text: 'how are you',
+                text: 'how are you today?',
                 tagtype: 'p'
             }),
             Button({
