@@ -1,10 +1,12 @@
 class Widget {
-    constructor(type, child, color, bgColor, children) {
+    constructor(type, child, color, bgColor, children, className, id) {
         this.child = child;
         this.children = children;
         this.type = type;
         this.bgColor = bgColor;
-        this.color = color
+        this.color = color;
+        this.className = className;
+        this.id = id;
     }
     // a method used to create Widgets
     CreateWidget() {
@@ -14,16 +16,32 @@ class Widget {
                 this.element.innerHTML = this.child;
             }
             else {
-                if(this.element != undefined){
+                if (this.element != undefined) {
                     this.element.appendChild(this.child);
-                }              
+                }
             }
         }
+        // setting the color
         if (this.color != undefined) {
             this.element.style.color = this.color;
         }
+        // setting the background color
         if (this.bgColor != undefined) {
             this.element.style.backgroundColor = this.bgColor;
+        }
+        // setting the class
+        // classname should be an array
+        if (this.className != undefined) {
+            console.log(this.className)
+            if (typeof this.className == 'object') {
+                for (let i = 0; i < this.className.length; i++) {
+                    this.element.classList.add(this.className[i]);
+                }
+            }
+        }
+        // setting the id
+        if (this.id != undefined) {
+            this.CreateAttribute('id', this.id)
         }
         return this.element;
 
@@ -36,9 +54,9 @@ class Widget {
                         this.element.append(children[i])
                     }
                     else {
-                        if(children[i] != undefined){
+                        if (children[i] != undefined) {
                             this.element.appendChild(children[i]);
-                        }  
+                        }
                     }
                 }
             }
@@ -66,29 +84,29 @@ class Widget {
 
 }
 // the Gesture class
-class Gesture{
+class Gesture {
     // for the click event
-    static click = (ele,func)=>{
-        ele.addEventListener('click',()=>{
+    static click = (ele, func) => {
+        ele.addEventListener('click', () => {
             func();
         })
         return ele;
     }
-    static hover = (ele,func)=>{
-        ele.addEventListener('mouseover',()=>{
+    static hover = (ele, func) => {
+        ele.addEventListener('mouseover', () => {
             func();
         })
         return ele;
     }
-    static dblClick = (ele,func)=>{
-        ele.addEventListener('dblclick',()=>{
+    static dblClick = (ele, func) => {
+        ele.addEventListener('dblclick', () => {
             func();
         })
         return ele;
     }
 }
 // the Color class
-class Colors{
+class Colors {
     // normal colors
     static white = 'white';
     static black = 'black';
@@ -103,24 +121,23 @@ class Colors{
     static pink = 'pink';
     static indigo = 'indigo';
     // a method to get RGB colors
-    static fromRGB = (red,green,blue)=>{
-        console.log([red,green,blue])
-        return [red,green,blue];
+    static fromRGB = (red, green, blue) => {
+        return `rgb(${red},${green},${blue})`;
     }
     // a method to get RGBA colors
-    static fromRGBA = (red,green,blue,a)=>{
-        console.log([red,green,blue,a])
-        return [red,green,blue,a];
+    static fromRGBA = (red, green, blue, a) => {
+        console.log([red, green, blue, a])
+        return [red, green, blue, a];
     }
     // a method to give Hex colors
-    static fromHex = (hex)=>{
+    static fromHex = (hex) => {
         return hex;
     }
 }
 
 // widgets that will be used in producing interfaces
 // Text widget
-function Text({ text, tagtype, color, bgColor }) {
+function Text({ text, tagtype, color, bgColor, id, className }) {
     // listing all the posible tags
     let supportedTextTags = ['h1', 'h2', 'h3', 'h3', 'h5', 'h6', 'b', 'i', 'em', 'small', 'p', 'pre', 's', 'span'];
     if (supportedTextTags.includes(tagtype)) {
@@ -128,6 +145,8 @@ function Text({ text, tagtype, color, bgColor }) {
         textWidget.type = tagtype;
         textWidget.bgColor = bgColor;
         textWidget.color = color;
+        textWidget.id = id;
+        textWidget.className = className;
         let ele = textWidget.CreateWidget();
         ele.innerHTML = text;
         return ele;
@@ -144,23 +163,25 @@ function Text({ text, tagtype, color, bgColor }) {
 
 }
 // Button widget
-function Button({ child, color, bgColor, click, hover }) {
+function Button({ child, color, bgColor, click, hover, id, className }) {
     let btn = new Widget();
     btn.type = 'Button';
     btn.child = child;
     btn.color = color;
     btn.bgColor = bgColor;
+    btn.id = id;
+    btn.className = className;
     let ele = btn.CreateWidget();
-    if(click != undefined){
-        Gesture.click(ele,click)
+    if (click != undefined) {
+        Gesture.click(ele, click)
     }
-    if(hover != undefined){
-        Gesture.hover(ele,hover)
+    if (hover != undefined) {
+        Gesture.hover(ele, hover)
     }
     return ele;
 }
 // Container widget
-function Container({ children, color, bgColor, tagtype }) {
+function Container({ children, color, bgColor, tagtype, id, className }) {
     // supported tags
     // make sure you create the element before creating the children
     let supportedTags = ['div', 'span', 'nav', 'aside', 'section'];
@@ -169,6 +190,8 @@ function Container({ children, color, bgColor, tagtype }) {
         ctn.type = tagtype;
         ctn.children = children;
         ctn.bgColor = bgColor;
+        ctn.id = id;
+        ctn.className = className;
         let ele = ctn.CreateWidget();
         ctn.CreateChildren(children);
         return ele;
@@ -185,13 +208,15 @@ function Container({ children, color, bgColor, tagtype }) {
 }
 // The Anchor Widget
 
-function Anchor({ href, child, download, target, color, bgColor }) {
+function Anchor({ href, child, download, target, color, bgColor, id, className }) {
     if (child != undefined && child != '') {
         let ach = new Widget();
         ach.type = 'a';
         ach.child = child;
         ach.color = color;
         ach.bgColor = bgColor;
+        ach.id = id;
+        ach.className = className;
         ach.CreateWidget();
         // setting the attributes
         let ele = ach.CreateAttribute('href', href);
@@ -210,7 +235,7 @@ function Anchor({ href, child, download, target, color, bgColor }) {
     }
 }
 // List widget
-function List({ type, data, children }) {
+function List({ type, data, children, id, className }) {
     // setting the default list type to UL
     if (type == undefined) {
         type = 'ul';
@@ -218,25 +243,31 @@ function List({ type, data, children }) {
     let lst = new Widget();
     lst.type = type;
     lst.children = children;
+    lst.id = id;
+    lst.className = className;
     let ele = lst.CreateWidget();
     lst.CreateChildren(children);
     return ele;
 }
 // the ListItem widget
-function ListItem({ children }) {
+function ListItem({ children, id, className }) {
     let li = new Widget();
     li.type = 'li';
+    li.id = id;
+    li.className = className;
     let ele = li.CreateWidget();
     li.children = children;
     li.CreateChildren(children);
     return ele;
 }
 // Image Widget
-function Image({ src, alt, height, width }) {
+function Image({ src, alt, height, width, id, className }) {
     // making sure src is set
     if (src != undefined) {
         let img = new Widget();
         img.type = 'img';
+        img.id = id;
+        img.className = className;
         let ele = img.CreateWidget();
         img.CreateAttribute('src', src);
         // performing validation for the height, width and alt 
@@ -257,10 +288,12 @@ function Image({ src, alt, height, width }) {
     }
 }
 // the audio widget
-function Audio({ src, controls, muted, auto, loop }) {
+function Audio({ src, controls, muted, auto, loop, id, className }) {
     if (src != undefined) {
         let au = new Widget();
         au.type = 'audio';
+        au.id = id;
+        au.className = className;
         let ele = au.CreateWidget();
         au.CreateAttribute('src', src);
         // controls
@@ -294,10 +327,12 @@ function Audio({ src, controls, muted, auto, loop }) {
     }
 }
 // the Video widget
-function Video({ src, controls, muted, auto, loop, height, width }) {
+function Video({ src, controls, muted, auto, loop, height, width, id, className }) {
     if (src != undefined) {
         let vid = new Widget();
         vid.type = 'video';
+        vid.id = id;
+        vid.className = className;
         let ele = vid.CreateWidget();
         vid.CreateAttribute('src', src);
         // Height
@@ -343,10 +378,12 @@ function Video({ src, controls, muted, auto, loop, height, width }) {
     }
 }
 // The Iframe widget
-function Iframe({ src, height, width }) {
+function Iframe({ src, height, width, id, className }) {
     if (src != undefined) {
         let frame = new Widget();
         frame.type = 'iframe';
+        frame.id = id;
+        frame.className = className;
         let ele = frame.CreateWidget();
         // Height
         if (height != undefined) {
@@ -367,9 +404,11 @@ function Iframe({ src, height, width }) {
     }
 }
 // the Line widget
-function Line({ width }) {
+function Line({ width, id, className }) {
     let hr = new Widget();
     hr.type = 'hr';
+    hr.id = id;
+    hr.className = className;
     let ele = hr.CreateWidget();
     if (width != undefined) {
         hr.CreateAttribute('width', width);
@@ -377,9 +416,11 @@ function Line({ width }) {
     return ele;
 }
 // the FormGroup widget
-function FormGroup({ children, action, method, validate, name }) {
+function FormGroup({ children, action, method, validate, name, id, className }) {
     let form = new Widget();
     form.type = 'form';
+    form.id = id;
+    form.className = className;
     let ele = form.CreateWidget();
     // validate
     if (validate != undefined) {
@@ -399,12 +440,14 @@ function FormGroup({ children, action, method, validate, name }) {
     return ele;
 }
 // the TextField widget
-function TextField({ type, value, autofocus, placeholder, required }) {
+function TextField({ type, value, autofocus, placeholder, required, id, className }) {
     let supportedTypes = ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image', 'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text', 'time', 'url', 'week',];
     if (type != undefined) {
         if (supportedTypes.includes(type)) {
             let field = new Widget();
             field.type = 'input';
+            field.id = id;
+            field.className = className;
             let ele = field.CreateWidget();
             field.CreateAttribute('type', type);
             if (value != undefined) {
@@ -437,9 +480,11 @@ function TextField({ type, value, autofocus, placeholder, required }) {
     }
 }
 // the Select widget
-function Select({ required, multiple, data }) {
+function Select({ required, multiple, data, id, className }) {
     let slc = new Widget();
     slc.type = 'select';
+    slc.id = id;
+    slc.className = className;
     let ele = slc.CreateWidget();
     // declare the children array so that you will produce the data and send it to the CreateChildren method
     let children = [];
@@ -470,7 +515,7 @@ function Select({ required, multiple, data }) {
 }
 
 // the Canvas widget
-function Canvas({ width, height, id, script }) {
+function Canvas({ width, height, id, script, className }) {
     // make sure you work on scripts property
     let cnv = new Widget();
     cnv.type = 'canvas';
@@ -487,15 +532,13 @@ function Canvas({ width, height, id, script }) {
             cnv.CreateAttribute('width', width);
         }
     }
-    // id
-    if (id != undefined) {
-        cnv.CreateAttribute('id', id);
-    }
+    cnv.id = id;
+    cnv.className = className;
     console.log(script);
     return element;
 };
 // the Table widget
-function Table({ headers, children }) {
+function Table({ headers, children, id, className }) {
     let tbl = new Widget();
     tbl.type = 'table';
     let ele = tbl.CreateWidget();
@@ -527,7 +570,7 @@ function Table({ headers, children }) {
     return ele;
 }
 // the TableRow widget
-function TableRow({ children, id }) {
+function TableRow({ children, id, className }) {
     let tr = new Widget();
     tr.type = 'tr';
     let ele = tr.CreateWidget();
@@ -535,7 +578,7 @@ function TableRow({ children, id }) {
     return ele;
 }
 // the TableCell()
-function TableCell({ child }) {
+function TableCell({ child, id, className }) {
     let td = new Widget();
     td.type = 'td';
     let ele = td.CreateWidget();
@@ -545,7 +588,7 @@ function TableCell({ child }) {
     return ele;
 }
 // the Code() widget
-function Code({ child }) {
+function Code({ child, id, className }) {
     let code = new Widget();
     code.type = 'code';
     let ele = code.CreateWidget();
@@ -555,7 +598,7 @@ function Code({ child }) {
     return ele;
 }
 // the Pre({}) widget
-function Pre({ child }) {
+function Pre({ child, id, className }) {
     let pre = new Widget();
     pre.type = 'pre';
     let ele = pre.CreateWidget();
@@ -566,38 +609,39 @@ function Pre({ child }) {
 }
 
 // the RenderApp Widget for redering
-function RenderApp({el,title, body}){
-    try{
+function RenderApp({ el, title, body }) {
+    try {
         let element = document.querySelector(el);
         element.innerHTML = '';
         element.appendChild(body);
     }
-    catch(err){
-       console.error(err)
+    catch (err) {
+        console.error(err)
     }
-  if(title != undefined){
-      document.querySelector('title').innerHTML = title;
-  }
+    if (title != undefined) {
+        document.querySelector('title').innerHTML = title;
+    }
 }
 // The condition Widget
-function Condition({data,child}){
-     if(data == true){
-         return child;
-     }
+function Condition({ data, child }) {
+    if (data == true) {
+        return child;
+    }
 }
 // the loop Widget still working on it  
-function Loop({data, children}){
+function Loop({ data, children }) {
     var value = 0;
     var index = 0;
-    if(data != undefined){
-        if(typeof data == 'object'){
-            data.forEach((value, index)=>{
+    if (data != undefined) {
+        if (typeof data == 'object') {
+            data.forEach((value, index) => {
                 value = value;
                 index = index;
                 console.log(value)
             })
         }
-    }  
-    return value,index
+    }
+    return value, index
 }
-
+// now we would use boostrap for easy styling of our widgets
+// the navbar widget

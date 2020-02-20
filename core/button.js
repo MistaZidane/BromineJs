@@ -10,6 +10,8 @@ function Body(){
         tagtype: 'div',
         children: [
             Button({
+                id: 'sssss',
+                className: ['ssss','ffff'],
                 child: 'me',
                 click: ()=>{
                     console.log('click me very well');
@@ -27,6 +29,7 @@ function Body(){
             Condition({
                 data: true,
                 child: Button({
+                    
                     child: 'click',
                     click: ()=>{
                         console.log('My own custom event');
@@ -34,9 +37,11 @@ function Body(){
                 })
             }),
             Gesture.dblClick(Text({
+                id: 'r',
+                className: ['ddd'],
                 text: 'zidane',
                 tagtype: 'p',
-                color: Colors.fromHex('#fff')
+                color: Colors.fromRGB(105,110,100)
             }),()=>{
                 console.log('text clicked')
             })
