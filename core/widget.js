@@ -14,7 +14,9 @@ class Widget {
                 this.element.innerHTML = this.child;
             }
             else {
-                this.element.appendChild(this.child);
+                if(this.element != undefined){
+                    this.element.appendChild(this.child);
+                }              
             }
         }
         if (this.color != undefined) {
@@ -34,7 +36,9 @@ class Widget {
                         this.element.append(children[i])
                     }
                     else {
-                        this.element.appendChild(children[i]);
+                        if(children[i] != undefined){
+                            this.element.appendChild(children[i]);
+                        }  
                     }
                 }
             }
@@ -61,6 +65,60 @@ class Widget {
     }
 
 }
+// the Gesture class
+class Gesture{
+    // for the click event
+    static click = (ele,func)=>{
+        ele.addEventListener('click',()=>{
+            func();
+        })
+        return ele;
+    }
+    static hover = (ele,func)=>{
+        ele.addEventListener('mouseover',()=>{
+            func();
+        })
+        return ele;
+    }
+    static dblClick = (ele,func)=>{
+        ele.addEventListener('dblclick',()=>{
+            func();
+        })
+        return ele;
+    }
+}
+// the Color class
+class Colors{
+    // normal colors
+    static white = 'white';
+    static black = 'black';
+    static green = 'green';
+    static teal = 'teal';
+    static red = 'red';
+    static orange = 'orange';
+    static blue = 'blue';
+    static tan = 'tan';
+    static yellow = 'yellow';
+    static grey = 'grey';
+    static pink = 'pink';
+    static indigo = 'indigo';
+    // a method to get RGB colors
+    static fromRGB = (red,green,blue)=>{
+        console.log([red,green,blue])
+        return [red,green,blue];
+    }
+    // a method to get RGBA colors
+    static fromRGBA = (red,green,blue,a)=>{
+        console.log([red,green,blue,a])
+        return [red,green,blue,a];
+    }
+    // a method to give Hex colors
+    static fromHex = (hex)=>{
+        return hex;
+    }
+}
+
+// widgets that will be used in producing interfaces
 // Text widget
 function Text({ text, tagtype, color, bgColor }) {
     // listing all the posible tags
@@ -86,13 +144,19 @@ function Text({ text, tagtype, color, bgColor }) {
 
 }
 // Button widget
-function Button({ child, color, bgColor }) {
+function Button({ child, color, bgColor, click, hover }) {
     let btn = new Widget();
     btn.type = 'Button';
     btn.child = child;
     btn.color = color;
     btn.bgColor = bgColor;
     let ele = btn.CreateWidget();
+    if(click != undefined){
+        Gesture.click(ele,click)
+    }
+    if(hover != undefined){
+        Gesture.hover(ele,hover)
+    }
     return ele;
 }
 // Container widget
@@ -491,7 +555,7 @@ function Code({ child }) {
     return ele;
 }
 // the Pre({}) widget
-function Pre({child}){
+function Pre({ child }) {
     let pre = new Widget();
     pre.type = 'pre';
     let ele = pre.CreateWidget();
@@ -500,43 +564,40 @@ function Pre({child}){
     }
     return ele;
 }
-let dd = [2, 3, 4, 5, 6, 7, 7, 8];
-document.body.appendChild(
-    Container({
-        tagtype: 'div',
-        children: [
-            Pre({
-                child: "<p> ssfssdf </p>"
-            }),
-            Code({
-                child: '<p>vdvdv dvdv</p>'
-            }),
-            Container({
-                tagtype: 'section',
-                children: [
-                    Line({
 
-                    }),
-                    TableRow({
-                        children: [
-                            TableCell({
-                                child: 'Table cell'
-                            })
-                        ]
-                    })
-                ]
-            }),
-            Text({
-                text: 'how are you today?',
-                tagtype: 'p'
-            }),
-            Button({
-                child: 'click me',
-            }),
-            TextField({
-                type: 'text',
-                autofocus: true
+// the RenderApp Widget for redering
+function RenderApp({el,title, body}){
+    try{
+        let element = document.querySelector(el);
+        element.innerHTML = '';
+        element.appendChild(body);
+    }
+    catch(err){
+       console.error(err)
+    }
+  if(title != undefined){
+      document.querySelector('title').innerHTML = title;
+  }
+}
+// The condition Widget
+function Condition({data,child}){
+     if(data == true){
+         return child;
+     }
+}
+// the loop Widget still working on it  
+function Loop({data, children}){
+    var value = 0;
+    var index = 0;
+    if(data != undefined){
+        if(typeof data == 'object'){
+            data.forEach((value, index)=>{
+                value = value;
+                index = index;
+                console.log(value)
             })
-        ]
-    })
-);
+        }
+    }  
+    return value,index
+}
+
