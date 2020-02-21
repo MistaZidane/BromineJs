@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert };
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -881,44 +881,54 @@ function Grid({ size, children }) {
 class Alert {
     // the main default alert ,idclass
     static normalalert = (classname, children, id) => {
+        let classes = [];
+        if(classname[1] != undefined){
+           classes = classname;
+           classes.push('alert');
+        }
+        else{
+             classname.pop();
+             classes =classname;
+             classes.push('alert');
+        }
         return Container({
-            className: ['alert', classname],
+            className: classes,
             tagtype: 'div',
             children: [children],
             id: id
         })
     }
     // primary alert
-    static primary = ({ child, id }) => {
-        return this.normalalert('alert-primary', child, id)
+    static primary = ({ child, id, className }) => {
+        return this.normalalert(['alert-primary'].concat(className) , child, id)
     }
     // secondary alert
-    static secondary = ({ child, id }) => {
-        return this.normalalert('alert-secondary', child, id)
+    static secondary = ({ child, id, className }) => {
+        return this.normalalert(['alert-secondary'].concat(className), child, id)
     }
     // success alert
-    static success = ({ child, id }) => {
-        return this.normalalert('alert-success', child, id)
+    static success = ({ child, id,className }) => {
+        return this.normalalert(['alert-success'].concat(className), child, id)
     }
     // danger alert
-    static danger = ({ child, id }) => {
-        return this.normalalert('alert-danger', child, id)
+    static danger = ({ child, id,className }) => {
+        return this.normalalert(['alert-danger'].concat(className), child, id)
     }
     // warning alert
-    static warning = ({ child, id }) => {
-        return this.normalalert('alert-warning', child, id)
+    static warning = ({ child, id,className }) => {
+        return this.normalalert(['alert-warning'].concat(className), child, id)
     }
     // info alert
-    static info = ({ child, id }) => {
-        return this.normalalert('alert-info', child, id)
+    static info = ({ child, id,className }) => {
+        return this.normalalert(['alert-info'].concat(className), child, id)
     }
     // light alert
-    static light = ({ child, id }) => {
-        return this.normalalert('alert-light', child, id)
+    static light = ({ child, id,className }) => {
+        return this.normalalert(['alert-light'].concat(className), child, id)
     }
     // dark alert
-    static dark = ({ child, id }) => {
-        return this.normalalert('alert-dark', child, id);
+    static dark = ({ child, id,className }) => {
+        return this.normalalert(['alert-dark'].concat(className), child, id);
     }
 }
 // the boostrap badge Widget

@@ -1,4 +1,4 @@
-import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert } from './widget.js'
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge } from './widget.js'
 
 
 RenderApp({
@@ -20,7 +20,8 @@ function name() {
 }
 
 function Body() {
-    return Badge.warning({
+    return Alert.danger({
+        className: ['test'],
         child: 'me',
         id: 'idd'
     })
