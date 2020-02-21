@@ -1,3 +1,6 @@
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert } from './widget.js'
+
+
 RenderApp({
     el: '#el',
     body: Body(),
@@ -17,7 +20,7 @@ function name() {
 }
 
 function Body() {
-    return Alert.primary({
+    return Badge.warning({
         child: 'me',
         id: 'idd'
     })

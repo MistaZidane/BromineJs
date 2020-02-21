@@ -1,3 +1,5 @@
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert };
+
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
         this.child = child;
@@ -88,7 +90,7 @@ class Widget {
 // the Gesture class
 class Gesture {
     // for the click event
-    static click = (ele, func) => {
+    static click = function (ele, func) {
         ele.addEventListener('click', () => {
             func();
         })
