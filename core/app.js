@@ -1,4 +1,4 @@
-import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup } from './widget.js'
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel } from './widget.js'
 
 
 RenderApp({
@@ -20,20 +20,10 @@ function name() {
 }
 
 function Body() {
-    return ButtonGroup({
-        role: 'role',
-        id: 'test',
-        buttons: [
-            Button.outlineDanger({
-                child: 'test'
-            }),
-            Button.secondary({
-                child: 'test'
-            }),
-            Button.primary({
-                child: 'test'
-            }),
-        ]
+    return Carousel({
+        indicators: true,
+        images:['https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg','https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg'],
+        controls: true
     })
 }
 

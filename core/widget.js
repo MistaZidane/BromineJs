@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge, ButtonGroup };
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -212,16 +212,16 @@ function Container({ children, color, bgColor, tagtype, id, className }) {
 }
 // The Anchor Widget
 
-function Anchor({ href, child, download, target, color, bgColor, id, className }) {
-    if (child != undefined && child != '') {
+function Anchor({ href, children, download, target, color, bgColor, id, className }) {
+    if (children != undefined && typeof children == 'object') {
         let ach = new Widget();
         ach.type = 'a';
-        ach.child = child;
         ach.color = color;
         ach.bgColor = bgColor;
         ach.id = id;
         ach.className = className;
         ach.CreateWidget();
+        ach.CreateChildren(children);
         // setting the attributes
         let ele = ach.CreateAttribute('href', href);
         // making sure the download properties value is always a boolean
@@ -1084,20 +1084,20 @@ class Button {
 //   #####
 // ########
 
-function ButtonGroup({buttons,className,id,role}) {
+function ButtonGroup({ buttons, className, id, role }) {
     let classes = [];
-    if(className != undefined){
+    if (className != undefined) {
         classes = ['btn-group'].concat(className);
     }
-    else{
+    else {
         classes = ['btn-group']
     }
     // making sure and error should not be throwns
     let btns = [];
-    if(buttons != undefined){
+    if (buttons != undefined) {
         btns = buttons
     }
-    else{
+    else {
         btns = []
     }
     let element = Container({
@@ -1107,8 +1107,163 @@ function ButtonGroup({buttons,className,id,role}) {
         id: id,
     });
     // setting the role of the button
-    if(role != undefined){
+    if (role != undefined) {
         element.setAttribute('role', role);
     }
     return element;
+}
+// the carousel widget
+// ##########
+// #        #
+// #        #
+// #        #
+// ##########
+function Carousel({ images, controls, indicators, id, className }) {
+    // variables
+    let classes = [];
+    let indicate;
+    let control;
+    let imagesState;
+    // setting the control t true or false
+    if (controls != undefined) {
+        if (typeof controls == 'boolean') {
+            control = true;
+        }
+    }
+    else {
+        control = false;
+    }
+    // setting the indicate to true or false
+    if (indicators != undefined) {
+        if (indicators == true) {
+            indicate = true;
+        }
+
+    }
+    else {
+        indicate = false;
+    }
+    if (className != undefined) {
+        classes = ['carousel', 'slide'].concat(className);
+    }
+    else {
+        classes = ['carousel', 'slide'];
+    }
+    // looping throug the images in a function to produce the required widgets
+    function loopImages(imagesArr) {
+        let elements = [];
+        if (imagesArr != undefined) {
+            imagesState = true;
+            if (typeof imagesArr == 'object') {
+                for (let i = 0; i < imagesArr.length; i++) {
+                    elements.push(Container({
+                        tagtype: 'div',
+                        className: ['carousel-item'],
+                        children: [
+                            Image({
+                                src: imagesArr[i],
+                                className: ['d-block', 'w-100']
+                            })
+                        ]
+                    }))
+                }
+            }
+        }
+        let innercaro = Container({
+            tagtype: 'div',
+            className: ['carousel-inner'],
+            children: elements
+        });
+        return innercaro;
+    }
+    let inner = loopImages(images);
+    // setting imagestate to false if the loopimages function did not run
+    if (imagesState == undefined) {
+        imagesState = false
+    }
+    // making the showControls function
+    function showNext() {
+        let nexticon = Text({ text: '', tagtype: 'span', className: ['carousel-control-next-icon'] });
+        nexticon.setAttribute('aria-hidden', 'true');
+        let next = Anchor({
+            href: '#carouselExampleIndicators',
+            className: ['carousel-control-next'],
+            children: [
+                nexticon,
+                Text({ tagtype: 'span', className: ['src-only'], text: 'Next' })
+            ]
+        });
+        next.setAttribute('role', 'button');
+        next.setAttribute('data-slide', 'next');
+        return next;
+    }
+    function showPrev() {
+        let previcon = Text({ text: '', tagtype: 'span', className: ['carousel-control-prev-icon'] });
+
+        previcon.setAttribute('aria-hidden', 'true');
+
+        let prev = Anchor({
+            href: '#carouselExampleIndicators',
+            className: ['carousel-control-prev'],
+            children: [
+                previcon,
+                Text({ tagtype: 'span', className: ['src-only'], text: 'Previous' })
+            ]
+        });
+        prev.setAttribute('role', 'button');
+        prev.setAttribute('data-slide', 'prev');
+        return prev;
+    }
+    // preparing the indicators list to display according to the number of images present
+    function indicatorList(images) {
+        let elements = [];
+        function carolist(dst) {
+            let listI = ListItem({
+                children: []
+            })
+            listI.setAttribute('data-target', '#carouselExampleIndicators');
+            listI.setAttribute('data-slide-to', dst);
+            return listI;
+        }
+        if (imagesState == true) {
+            for (let i = 0; i < images.length; i++) {
+                elements.push(carolist(i))
+            }
+        }
+        return elements;
+    }
+    let caro = Container({
+        tagtype: 'div',
+        id: 'carouselExampleIndicators',
+        className: classes,
+        children: [
+            // condition for indicators
+            Condition({
+                data: indicate,
+                child: List({
+                    type: 'ol',
+                    className: ['carousel-indicators'],
+                    children: indicatorList(images)
+                }),
+            }),
+            // the carousell inner condition
+            Condition({
+                data: imagesState,
+                child: inner
+            }),
+            // for carousel controls
+            // for the first
+            Condition({
+                data: control,
+                child: showPrev(),
+            }),
+            // for the second
+            Condition({
+                data: control,
+                child: showNext(),
+            })
+        ]
+    });
+    caro.setAttribute('data-ride', "carousel");
+    return caro;
 }
