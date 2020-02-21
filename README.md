@@ -7,7 +7,7 @@
 
 BromineJS is a JS framework that uses a JS-only and widget based approach to building web applications. Bromine provides you the flexibilty of using multiple UI libraries and frameworks such as Boostrap, Material and Bulma without needing to know any of them. Read the [Docs]()
 
-![](header.png)
+<!-- ![](header.png) -->
 
 ## Installation
 
@@ -45,11 +45,11 @@ Your Name – [@YourTwitter]() – YourEmail@example.com
 
 Distributed under the "TODO" license. See ``LICENSE`` for more information.
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
+[https://github.com/phantomzidane/BromineJs](https://github.com/phantomzidane/BromineJs)
 
 ## Contributing
 
-1. Fork it ()
+1. Fork it [https://github.com/phantomzidane/BromineJs][()
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
