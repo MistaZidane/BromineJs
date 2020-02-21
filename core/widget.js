@@ -8,6 +8,9 @@ class Widget {
         this.className = className;
         this.id = id;
     }
+    static btn({ ee, er }) {
+        console.log(ee, er)
+    }
     // a method used to create Widgets
     CreateWidget() {
         this.element = document.createElement(this.type);
@@ -32,7 +35,6 @@ class Widget {
         // setting the class
         // classname should be an array
         if (this.className != undefined) {
-            console.log(this.className)
             if (typeof this.className == 'object') {
                 for (let i = 0; i < this.className.length; i++) {
                     this.element.classList.add(this.className[i]);
@@ -163,7 +165,7 @@ function Text({ text, tagtype, color, bgColor, id, className }) {
 
 }
 // Button widget
-function Button({ child, color, bgColor, click, hover, id, className }) {
+function Btn({ child, color, bgColor, click, hover, id, className }) {
     let btn = new Widget();
     btn.type = 'Button';
     btn.child = child;
@@ -221,11 +223,13 @@ function Anchor({ href, child, download, target, color, bgColor, id, className }
         // setting the attributes
         let ele = ach.CreateAttribute('href', href);
         // making sure the download properties value is always a boolean
-        if (typeof download == 'boolean') {
-            ele = ach.CreateAttribute('download', download);
-        }
-        else {
-            console.error('The download prperty for Anchor({}) requires a boolean');
+        if (download != undefined) {
+            if (typeof download == 'boolean') {
+                ele = ach.CreateAttribute('download', download);
+            }
+            else {
+                console.error('The download prperty for Anchor({}) requires a boolean');
+            }
         }
         ele = ach.CreateAttribute('target', target);
         return ele;
@@ -644,4 +648,403 @@ function Loop({ data, children }) {
     return value, index
 }
 // now we would use boostrap for easy styling of our widgets
+// we will be using boostrap for easy styling
+// #          #
+// #          ##
+// #          ###
+// #          #####
+// #          ######
 // the navbar widget
+function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color, dropdown, form }) {
+    let toogleState;
+    let brandState;
+    let navbarNavState;
+    let dropdownState;
+    let formstate;
+    // toggle state
+    if (toogle != undefined) {
+        if (typeof toogle == 'boolean') {
+            toogleState = true;
+        }
+    }
+    // navbar nav state
+    function mapListToHref() {
+        let children = [];
+        if (navbarNav != undefined) {
+            if (typeof navbarNav == 'object') {
+                navbarNavState = true;
+                for (i = 0; i < navbarNav.items.length; i++) {
+                    console.log(typeof navbarNav.items[i])
+                    children.push(ListItem({
+                        className: ['nav-item'],
+                        children: [
+                            Anchor({
+                                className: ['nav-link'],
+                                href: navbarNav.hrefs[i],
+                                child: navbarNav.items[i]
+                            })
+                        ]
+                    }))
+                }
+            }
+        }
+        return children;
+    }
+    // dropdownData 
+    function dropdowndata() {
+        let children = [];
+        if (dropdown != undefined) {
+            if (typeof dropdown == 'object') {
+                dropdownState = true;
+                for (i = 0; i < dropdown.items.length; i++) {
+                    console.log(typeof dropdown.items[i])
+                    children.push(Anchor({
+                        className: ['dropdown-item'],
+                        href: dropdown.hrefs[i],
+                        child: dropdown.items[i]
+                    }))
+                }
+            }
+        }
+        let navdrop = ListItem({
+            className: ['nav-item', 'dropdown'],
+            children: [
+                Anchor({
+                    className: ['nav-link', 'dropdown-toggle'],
+                    child: 'Dropdown',
+                    id: 'navbarDropdown'
+                }),
+                Container({
+                    className: ['dropdown-menu'],
+                    tagtype: 'div',
+                    children: children
+                })
+            ]
+        })
+        return navdrop
+
+    }
+    let maptolist = mapListToHref();
+    let drop = dropdowndata()
+    // inline form
+    function inlineForm() {
+        let child;
+        if (form != undefined) {
+            if (typeof form == 'object') {
+                formstate = true;
+                child = FormGroup({
+                    className: ['form-inline', 'my-2', 'my-lg-0'],
+                    children: [
+                        TextField({
+                            type: form.type,
+                            className: ['form-control', 'mr-sm-2'],
+                        }),
+                        Btn({
+                            click: () => { console.log('search clicked') },
+                            child: form.text,
+                            className: ['btn', 'btn-outline-success', 'my-2', 'my-sm-0']
+                        })
+                    ]
+                })
+            }
+        }
+        return child;
+    }
+    let inlineform = inlineForm();
+    //brand state
+    if (brand != undefined) {
+        if (typeof brand == 'string') {
+            brandState = true;
+        }
+    }
+    return Container({
+        className: ['navbar', 'navbar-expand-lg', 'navbar-light', 'bg-light'],
+        tagtype: 'nav',
+        children: [
+            Condition({
+                data: brandState,
+                child: Anchor({
+                    className: ['navbar-brand'],
+                    href: '#',
+                    child: brand
+                }),
+            }),
+            Condition({
+                data: toogleState,
+                child: Btn({
+                    className: ['navbar-toggler'],
+                    child: Container({
+                        children: [],
+                        tagtype: 'span',
+                        className: ['navbar-toggler-icon']
+                    })
+                })
+            }),
+            Condition({
+                data: navbarNavState,
+                child: Container({
+                    className: ['collapse', 'navbar-collapse'],
+                    id: 'navbarSupportedContent',
+                    children: [
+                        List({
+                            type: 'ul',
+                            className: ['navbar-nav', 'mr-auto'],
+                            children: [maptolist, drop, inlineform].flat(2)
+                        }),
+                    ],
+                    tagtype: 'div'
+                })
+            })
+        ]
+    })
+}
+
+function Card({ image, text, title, btn, children }) {
+    let childrentoberendered = [];
+    if (image != undefined) {
+        childrentoberendered.push(Image({
+            src: image,
+            className: ['card-img-top']
+        }))
+    }
+    var textWid = '';
+    if (text != undefined) {
+        textWid = Text({ text: text, tagtype: 'p', className: ['card-text'] });
+    }
+    var titleWid = ' ';
+    if (title != undefined) {
+        console.log(title)
+        titleWid = Text({ text: title, tagtype: 'h5', className: ['card-title'] });
+    }
+    var cardBtn = '';
+    if (btn != undefined) {
+        btn.classList.add('btn');
+        cardBtn = btn
+    }
+
+    childrentoberendered.push(Container({
+        tagtype: 'div',
+        className: ['card-body'],
+        children: [
+            titleWid,
+            textWid,
+            cardBtn
+
+        ]
+    }));
+    if (children != undefined) {
+        childrentoberendered = children
+    }
+    console.log(childrentoberendered)
+    return Container({
+        className: ['card'],
+        tagtype: 'div',
+        children: childrentoberendered
+    })
+}
+
+// the Grid 
+function Grid({ size, children }) {
+    let columnChildren = []
+    if (children != undefined) {
+        if (typeof children == 'object') {
+            // looping to get the children from the children array
+            for (let i = 0; i < children.length; i++) {
+                columnChildren.push(children[i]);
+            }
+        }
+    }
+    let sizeArray = [];
+    if (size != undefined) {
+        if (typeof size == 'object') {
+            // looping throug the size array to get the styles and make a class from if
+            for (let i = 0; i < size.length; i++) {
+                sizeArray.push(Container({
+                    tagtype: 'div',
+                    className: [`col-sm-${size[i]}`],
+                    // mapping the corresponding class to the coresponding widget
+                    children: [columnChildren[i]]
+                }));
+            }
+        }
+    }
+    return Container({
+        tagtype: 'div',
+        className: ['row'],
+        children: sizeArray
+    })
+}
+
+// the boostrap alert widget
+class Alert {
+    // the main default alert ,idclass
+    static normalalert = (classname, children, id) => {
+        return Container({
+            className: ['alert', classname],
+            tagtype: 'div',
+            children: [children],
+            id: id
+        })
+    }
+    // primary alert
+    static primary = ({ child, id }) => {
+        return this.normalalert('alert-primary', child, id)
+    }
+    // secondary alert
+    static secondary = ({ child, id }) => {
+        return this.normalalert('alert-secondary', child, id)
+    }
+    // success alert
+    static success = ({ child, id }) => {
+        return this.normalalert('alert-success', child, id)
+    }
+    // danger alert
+    static danger = ({ child, id }) => {
+        return this.normalalert('alert-danger', child, id)
+    }
+    // warning alert
+    static warning = ({ child, id }) => {
+        return this.normalalert('alert-warning', child, id)
+    }
+    // info alert
+    static info = ({ child, id }) => {
+        return this.normalalert('alert-info', child, id)
+    }
+    // light alert
+    static light = ({ child, id }) => {
+        return this.normalalert('alert-light', child, id)
+    }
+    // dark alert
+    static dark = ({ child, id }) => {
+        return this.normalalert('alert-dark', child, id);
+    }
+}
+// the boostrap badge Widget
+//#############
+// ####
+//  ##
+//   #########
+
+class Badge {
+    static normalBadge = (classname, child, id) => {
+        return Container({
+            className: ['badge', classname],
+            tagtype: 'span',
+            children: [child],
+            id: id
+        })
+    }
+    // primary badge
+    static primary = ({ child, id }) => {
+        return this.normalBadge('badge-primary', child, id)
+    }
+    // secondary badge
+    static secondary = ({ child, id }) => {
+        return this.normalBadge('badge-secondary', child, id)
+    }
+    // success badge
+    static success = ({ child, id }) => {
+        return this.normalBadge('badge-success', child, id)
+    }
+    // danger badge
+    static danger = ({ child, id }) => {
+        return this.normalBadge('badge-danger', child, id)
+    }
+    // warning badge
+    static warning = ({ child, id }) => {
+        return this.normalBadge('badge-warning', child, id)
+    }
+    // info badge
+    static info = ({ child, id }) => {
+        return this.normalBadge('badge-info', child, id)
+    }
+    // light badge
+    static light = ({ child, id }) => {
+        return this.normalBadge('badge-light', child, id)
+    }
+    // dark badge
+    static dark = ({ child, id }) => {
+        return this.normalBadge('badge-dark', child, id);
+    }
+}
+// the boostrap button class
+// do not mistake it for the Button function
+class Button {
+    static normalButton = (classname, child, id, click, hover) => {
+        return Btn({
+            className: ['btn', classname],
+            child: child,
+            id: id,
+            click: click,
+            hover: hover
+        })
+    }
+    // primary Button
+    static primary = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-primary', child, id, click, hover)
+    }
+    // secondary Button
+    static secondary = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-secondary', child, id, click, hover)
+    }
+    // success Button
+    static success = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-success', child, id, click, hover)
+    }
+    // danger Button
+    static danger = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-danger', child, id, click, hover)
+    }
+    // warning Button
+    static warning = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-warning', child, id, click, hover)
+    }
+    // info Button
+    static info = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-info', child, id, click, hover)
+    }
+    // light Button
+    static light = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-light', child, id, click, hover)
+    }
+    // dark Button
+    static dark = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-dark', child, id, click, hover);
+    }
+
+    // the btn outline section
+    // primary outline Button
+    static outlinepPrimary = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-primary', child, id, click, hover)
+    }
+    // secondary outline Button
+    static outlineSecondary = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-secondary', child, id, click, hover)
+    }
+    // success outline Button
+    static outlineSuccess = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-success', child, id, click, hover)
+    }
+    // danger outline Button
+    static outlineDanger = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-danger', child, id, click, hover)
+    }
+    // warning outline Button
+    static outlineWarning = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-warning', child, id, click, hover)
+    }
+    // info outline Button
+    static outlineInfo = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-info', child, id, click, hover)
+    }
+    // light outline Button
+    static outlineLight = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-light', child, id, click, hover)
+    }
+    // dark outline Button
+    static outlineDark = ({ child, id, click, hover }) => {
+        return this.normalButton('btn-outline-dark', child, id, click, hover);
+    }
+}
+
+// the 
