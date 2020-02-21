@@ -20,10 +20,8 @@ function name() {
 }
 
 function Body() {
-    return Badge.secondary({
-        className: ['test'],
-        child: 'me',
-        id: 'idd'
+    return Button.outlineDanger({
+        child: 'click me',
     })
 }
 
