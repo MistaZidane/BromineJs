@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel };
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -1156,19 +1156,36 @@ function Carousel({ images, controls, indicators, id, className }) {
             imagesState = true;
             if (typeof imagesArr == 'object') {
                 for (let i = 0; i < imagesArr.length; i++) {
-                    elements.push(Container({
-                        tagtype: 'div',
-                        className: ['carousel-item'],
-                        children: [
-                            Image({
-                                src: imagesArr[i],
-                                className: ['d-block', 'w-100']
-                            })
-                        ]
-                    }))
+                    // so that only the first slide should hav the active class
+                    if (i == 0) {
+                        elements.push(Container({
+                            tagtype: 'div',
+                            className: ['carousel-item', 'active'],
+                            children: [
+                                Image({
+                                    src: imagesArr[i],
+                                    className: ['d-block', 'w-100']
+                                })
+                            ]
+                        }));
+                    }
+                    // all other elememts will not have the active class
+                    else {
+                        elements.push(Container({
+                            tagtype: 'div',
+                            className: ['carousel-item'],
+                            children: [
+                                Image({
+                                    src: imagesArr[i],
+                                    className: ['d-block', 'w-100']
+                                })
+                            ]
+                        }));
+                    }
                 }
             }
         }
+        console.log(elements)
         let innercaro = Container({
             tagtype: 'div',
             className: ['carousel-inner'],

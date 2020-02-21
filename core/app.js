@@ -1,4 +1,4 @@
-import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel } from './widget.js'
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid } from './widget.js'
 
 
 RenderApp({
@@ -20,10 +20,16 @@ function name() {
 }
 
 function Body() {
-    return Carousel({
-        indicators: true,
-        images:['https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg','https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg'],
-        controls: true
+    return Grid({
+        size: [2,8,2],
+        children: [
+            Line({}),
+            Carousel({
+                indicators: true,
+                images:['https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg','https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg'],
+                controls: true
+            })
+        ]
     })
 }
 
