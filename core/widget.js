@@ -1118,15 +1118,51 @@ function ButtonGroup({ buttons, className, id, role }) {
 // #        #
 // #        #
 // ##########
-function Carousel({ images, controls, indicators, id, className }) {
+function Carousel({ images, controls, indicators, id, className, caption }) {
     // variables
     let classes = [];
     let indicate;
     let control;
     let imagesState;
+    let captionState;
+    // state of the caption
+    if (caption != undefined) {
+        if (typeof caption == 'object') {
+            captionState = true;
+        }
+        else {
+            captionState = false;
+        }
+    }
+    else {
+        captionState = false;
+    }
+    // loop through captions and prepare them
+    function captionsTitle(caption, index) {
+        let title = [];
+        for (let i = 0; i < caption.length; i++) {
+            title.push(Text({
+                tagtype: 'h5',
+                text: caption[i].title
+            }))
+        }
+        return title[index]
+    }
+    function captionsSubTitle(caption, index) {
+        let subtitle = [];
+        for (let i = 0; i < caption.length; i++) {
+            subtitle.push(Text({
+                tagtype: 'p',
+                text: caption[i].subtitle
+            }))
+        }
+        return subtitle[index]
+    }
+    captionsSubTitle(caption, 0);
+    captionsTitle(caption, 1);
     // setting the control t true or false
     if (controls != undefined) {
-        if (typeof controls == 'boolean') {
+        if (controls == true) {
             control = true;
         }
     }
@@ -1165,6 +1201,17 @@ function Carousel({ images, controls, indicators, id, className }) {
                                 Image({
                                     src: imagesArr[i],
                                     className: ['d-block', 'w-100']
+                                }),
+                                Condition({
+                                    data: captionState,
+                                    child: Container({
+                                        tagtype: 'div',
+                                        children: [
+                                            captionsTitle(caption, i),
+                                            captionsSubTitle(caption, i)
+                                        ],
+                                        className: ['carousel-caption', 'd-none', 'd-md-block']
+                                    }),
                                 })
                             ]
                         }));
@@ -1178,6 +1225,17 @@ function Carousel({ images, controls, indicators, id, className }) {
                                 Image({
                                     src: imagesArr[i],
                                     className: ['d-block', 'w-100']
+                                }),
+                                Condition({
+                                    data: captionState,
+                                    child: Container({
+                                        tagtype: 'div',
+                                        children: [
+                                            captionsTitle(caption, i),
+                                            captionsSubTitle(caption, i)
+                                        ],
+                                        className: ['carousel-caption', 'd-none', 'd-md-block']
+                                    }),
                                 })
                             ]
                         }));
@@ -1185,7 +1243,6 @@ function Carousel({ images, controls, indicators, id, className }) {
                 }
             }
         }
-        console.log(elements)
         let innercaro = Container({
             tagtype: 'div',
             className: ['carousel-inner'],
@@ -1284,3 +1341,5 @@ function Carousel({ images, controls, indicators, id, className }) {
     caro.setAttribute('data-ride', "carousel");
     return caro;
 }
+
+// make sure you implement carousel captions

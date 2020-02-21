@@ -26,6 +26,11 @@ function Body() {
             Line({}),
             Carousel({
                 indicators: true,
+                caption: [
+                    {subtitle:'How are you',title: 'Texting ddd'},
+                    {subtitle:'How are you doing',title: 'Texting'},
+                ],
+                
                 images:['https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg','https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg'],
                 controls: true
             })
