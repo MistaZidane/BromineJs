@@ -20,7 +20,7 @@ function name() {
 }
 
 function Body() {
-    return Alert.danger({
+    return Badge.secondary({
         className: ['test'],
         child: 'me',
         id: 'idd'

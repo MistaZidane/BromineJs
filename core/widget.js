@@ -939,44 +939,54 @@ class Alert {
 
 class Badge {
     static normalBadge = (classname, child, id) => {
+        let classes = [];
+        if(classname[1] != undefined){
+           classes = classname;
+           classes.push('badge');
+        }
+        else{
+             classname.pop();
+             classes =classname;
+             classes.push('badge');
+        }
         return Container({
-            className: ['badge', classname],
+            className:classes,
             tagtype: 'span',
             children: [child],
             id: id
         })
     }
     // primary badge
-    static primary = ({ child, id }) => {
-        return this.normalBadge('badge-primary', child, id)
+    static primary = ({ child, id,className}) => {
+        return this.normalBadge(['badge-primary'].concat(className), child, id)
     }
     // secondary badge
-    static secondary = ({ child, id }) => {
-        return this.normalBadge('badge-secondary', child, id)
+    static secondary = ({ child, id, className }) => {
+        return this.normalBadge(['badge-secondary'].concat(className), child, id)
     }
     // success badge
-    static success = ({ child, id }) => {
-        return this.normalBadge('badge-success', child, id)
+    static success = ({ child, id, className }) => {
+        return this.normalBadge(['badge-success'].concat(className), child, id)
     }
     // danger badge
-    static danger = ({ child, id }) => {
-        return this.normalBadge('badge-danger', child, id)
+    static danger = ({ child, id, className }) => {
+        return this.normalBadge(['badge-danger'].concat(className), child, id)
     }
     // warning badge
-    static warning = ({ child, id }) => {
-        return this.normalBadge('badge-warning', child, id)
+    static warning = ({ child, id, className }) => {
+        return this.normalBadge(['badge-warning'].concat(className), child, id)
     }
     // info badge
-    static info = ({ child, id }) => {
-        return this.normalBadge('badge-info', child, id)
+    static info = ({ child, id, className }) => {
+        return this.normalBadge(['badge-info'].concat(className), child, id)
     }
     // light badge
-    static light = ({ child, id }) => {
-        return this.normalBadge('badge-light', child, id)
+    static light = ({ child, id, className }) => {
+        return this.normalBadge(['badge-light'].concat(className), child, id)
     }
     // dark badge
-    static dark = ({ child, id }) => {
-        return this.normalBadge('badge-dark', child, id);
+    static dark = ({ child, id, className }) => {
+        return this.normalBadge(['badge-dark'].concat(className), child, id);
     }
 }
 // the boostrap button class
