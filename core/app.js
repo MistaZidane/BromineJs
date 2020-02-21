@@ -1,3 +1,6 @@
+import { RenderApp, Container, Button, Condition, Gesture, Colors } from './widget.js'
+
+
 RenderApp({
     el: '#el',
     body:Body(),
@@ -35,15 +38,6 @@ function Body(){
                         console.log('My own custom event');
                     }
                 })
-            }),
-            Gesture.dblClick(Text({
-                id: 'r',
-                className: ['ddd'],
-                text: 'zidane',
-                tagtype: 'p',
-                color: Colors.fromRGB(105,110,100)
-            }),()=>{
-                console.log('text clicked')
             })
             
         ],

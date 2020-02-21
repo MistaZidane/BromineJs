@@ -1,3 +1,5 @@
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors };
+
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
         this.child = child;
@@ -86,7 +88,7 @@ class Widget {
 // the Gesture class
 class Gesture {
     // for the click event
-    static click = (ele, func) => {
+    static click = function (ele, func) {
         ele.addEventListener('click', () => {
             func();
         })
@@ -645,3 +647,5 @@ function Loop({ data, children }) {
 }
 // now we would use boostrap for easy styling of our widgets
 // the navbar widget
+
+
