@@ -1,4 +1,4 @@
-import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge } from './widget.js'
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup } from './widget.js'
 
 
 RenderApp({
@@ -20,8 +20,20 @@ function name() {
 }
 
 function Body() {
-    return Button.outlineDanger({
-        child: 'click me',
+    return ButtonGroup({
+        role: 'role',
+        id: 'test',
+        buttons: [
+            Button.outlineDanger({
+                child: 'test'
+            }),
+            Button.secondary({
+                child: 'test'
+            }),
+            Button.primary({
+                child: 'test'
+            }),
+        ]
     })
 }
 

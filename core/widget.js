@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge };
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge, ButtonGroup };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -882,14 +882,14 @@ class Alert {
     // the main default alert ,idclass
     static normalalert = (classname, children, id) => {
         let classes = [];
-        if(classname[1] != undefined){
-           classes = classname;
-           classes.push('alert');
+        if (classname[1] != undefined) {
+            classes = classname;
+            classes.push('alert');
         }
-        else{
-             classname.pop();
-             classes =classname;
-             classes.push('alert');
+        else {
+            classname.pop();
+            classes = classname;
+            classes.push('alert');
         }
         return Container({
             className: classes,
@@ -900,34 +900,34 @@ class Alert {
     }
     // primary alert
     static primary = ({ child, id, className }) => {
-        return this.normalalert(['alert-primary'].concat(className) , child, id)
+        return this.normalalert(['alert-primary'].concat(className), child, id)
     }
     // secondary alert
     static secondary = ({ child, id, className }) => {
         return this.normalalert(['alert-secondary'].concat(className), child, id)
     }
     // success alert
-    static success = ({ child, id,className }) => {
+    static success = ({ child, id, className }) => {
         return this.normalalert(['alert-success'].concat(className), child, id)
     }
     // danger alert
-    static danger = ({ child, id,className }) => {
+    static danger = ({ child, id, className }) => {
         return this.normalalert(['alert-danger'].concat(className), child, id)
     }
     // warning alert
-    static warning = ({ child, id,className }) => {
+    static warning = ({ child, id, className }) => {
         return this.normalalert(['alert-warning'].concat(className), child, id)
     }
     // info alert
-    static info = ({ child, id,className }) => {
+    static info = ({ child, id, className }) => {
         return this.normalalert(['alert-info'].concat(className), child, id)
     }
     // light alert
-    static light = ({ child, id,className }) => {
+    static light = ({ child, id, className }) => {
         return this.normalalert(['alert-light'].concat(className), child, id)
     }
     // dark alert
-    static dark = ({ child, id,className }) => {
+    static dark = ({ child, id, className }) => {
         return this.normalalert(['alert-dark'].concat(className), child, id);
     }
 }
@@ -940,24 +940,24 @@ class Alert {
 class Badge {
     static normalBadge = (classname, child, id) => {
         let classes = [];
-        if(classname[1] != undefined){
-           classes = classname;
-           classes.push('badge');
+        if (classname[1] != undefined) {
+            classes = classname;
+            classes.push('badge');
         }
-        else{
-             classname.pop();
-             classes =classname;
-             classes.push('badge');
+        else {
+            classname.pop();
+            classes = classname;
+            classes.push('badge');
         }
         return Container({
-            className:classes,
+            className: classes,
             tagtype: 'span',
             children: [child],
             id: id
         })
     }
     // primary badge
-    static primary = ({ child, id,className}) => {
+    static primary = ({ child, id, className }) => {
         return this.normalBadge(['badge-primary'].concat(className), child, id)
     }
     // secondary badge
@@ -994,14 +994,13 @@ class Badge {
 class Button {
     static normalButton = (classname, child, id, click, hover) => {
         let classes = [];
-        console.log(classname[1])
-        if(classname[1] != undefined){
+        if (classname[1] != undefined) {
             classes = classname;
             classes.push('btn');
         }
-        else{
+        else {
             classname.pop();
-            classes =classname;
+            classes = classname;
             classes.push('btn');
         }
         return Btn({
@@ -1017,67 +1016,99 @@ class Button {
         return this.normalButton(['btn-primary'].concat(classname), child, id, click, hover)
     }
     // secondary Button
-    static secondary = ({ child, id, click, hover,classname}) => {
+    static secondary = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-secondary'].concat(classname), child, id, click, hover)
     }
     // success Button
-    static success = ({ child, id, click, hover,classname}) => {
+    static success = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-success'].concat(classname), child, id, click, hover)
     }
     // danger Button
-    static danger = ({ child, id, click, hover,classname}) => {
+    static danger = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-danger'].concat(classname), child, id, click, hover)
     }
     // warning Button
-    static warning = ({ child, id, click, hover,classname}) => {
+    static warning = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-warning'].concat(classname), child, id, click, hover)
     }
     // info Button
-    static info = ({ child, id, click, hover,classname}) => {
+    static info = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-info'].concat(classname), child, id, click, hover)
     }
     // light Button
-    static light = ({ child, id, click, hover,classname}) => {
+    static light = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-light'].concat(classname), child, id, click, hover)
     }
     // dark Button
-    static dark = ({ child, id, click, hover,classname}) => {
+    static dark = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-dark'].concat(classname), child, id, click, hover);
     }
 
     // the btn outline section
     // primary outline Button
-    static outlinepPrimary = ({ child, id, click, hover,classname}) => {
+    static outlinepPrimary = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-primary'].concat(classname), child, id, click, hover)
     }
     // secondary outline Button
-    static outlineSecondary = ({ child, id, click, hover,classname}) => {
+    static outlineSecondary = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-secondary'].concat(classname), child, id, click, hover)
     }
     // success outline Button
-    static outlineSuccess = ({ child, id, click, hover,classname}) => {
+    static outlineSuccess = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-success'].concat(classname), child, id, click, hover)
     }
     // danger outline Button
-    static outlineDanger = ({ child, id, click, hover,classname}) => {
+    static outlineDanger = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-danger'].concat(classname), child, id, click, hover)
     }
     // warning outline Button
-    static outlineWarning = ({ child, id, click, hover,classname}) => {
+    static outlineWarning = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-warning'].concat(classname), child, id, click, hover)
     }
     // info outline Button
-    static outlineInfo = ({ child, id, click, hover,classname}) => {
+    static outlineInfo = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-info'].concat(classname), child, id, click, hover)
     }
     // light outline Button
-    static outlineLight = ({ child, id, click, hover,classname}) => {
+    static outlineLight = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-light'].concat(classname), child, id, click, hover)
     }
     // dark outline Button
-    static outlineDark = ({ child, id, click, hover,classname}) => {
+    static outlineDark = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['btn-outline-dark'].concat(classname), child, id, click, hover);
     }
 }
 
-// the 
+// the ButtonGroup Widget
+//#####
+//   #####
+// ########
+
+function ButtonGroup({buttons,className,id,role}) {
+    let classes = [];
+    if(className != undefined){
+        classes = ['btn-group'].concat(className);
+    }
+    else{
+        classes = ['btn-group']
+    }
+    // making sure and error should not be throwns
+    let btns = [];
+    if(buttons != undefined){
+        btns = buttons
+    }
+    else{
+        btns = []
+    }
+    let element = Container({
+        tagtype: 'div',
+        children: btns,
+        className: classes,
+        id: id,
+    });
+    // setting the role of the button
+    if(role != undefined){
+        element.setAttribute('role', role);
+    }
+    return element;
+}
