@@ -1955,7 +1955,7 @@ function Timeout({ milisecs, ondone = (child) => { }, child }) {
 // the Icons widget
 // this widget will provide you with a quick way to have icons to you app
 class Icons {
-  static icon({ classname }) {
+    static icon({ classname }) {
         let i = new Widget();
         i.type = 'i';
         i.className = ['fa', `fa-${classname}`];
@@ -1963,7 +1963,154 @@ class Icons {
         ele.setAttribute('aria-hidden', 'true');
         return ele;
     }
-    static home = () => {
-       return this.icon({classname: 'home'});
-    }
+    static home = this.icon({ classname: 'home' });
+    
+    static telegram =  this.icon({ classname: 'telegram' });
+    static glass =  this.icon({ classname: 'glass' });
+    static music =  this.icon({ classname: 'music' });
+  
+    static search =  this.icon({ classname: 'search' });
+    
+    static envelope = this.icon({ classname: 'envelope-o' });
+    
+    static heart =  this.icon({ classname: 'heart' });
+    
+    static star = this.icon({ classname: 'star' });
+    
+    static user = this.icon({ classname: 'user' });
+    
+    static film = this.icon({ classname: 'film' });
+    
+    static check =  this.icon({ classname: 'check' });
+    
+    static times =  this.icon({ classname: 'times' });
+    
+    static zoomPlus =  this.icon({ classname: 'search-plus' });
+    
+    static zoomMinus =  this.icon({ classname: 'search-minus' });
+    
+    static power =  this.icon({ classname: 'power-off' });
+    
+    static signal =  this.icon({ classname: 'signal' });
+    
+    static settings =  this.icon({ classname: 'cog' });
+    
+    static trash =  this.icon({ classname: 'trash-o' });
+    
+    static file = this.icon({ classname: 'file-o' });
+    
+    static clock =  this.icon({ classname: 'clock-o' });
+    
+    static road = this.icon({ classname: 'road' });
+    
+    static download = this.icon({ classname: 'download' });
+    
+    static circleArrowDown = this.icon({ classname: 'arrow-circle-down' });
+    
+    static circleArrowUp =  this.icon({ classname: 'arrow-circle-down' });
+    
+    static inbox =  this.icon({ classname: 'inbox' });
+    
+    static circlePlay =  this.icon({ classname: '-play-circle-o' });
+    
+    static repeat =  this.icon({ classname: 'repeat' });
+    
+    static refresh =  this.icon({ classname: 'refresh' });
+    
+    static ListAlt = this.icon({ classname: 'list' });
+    
+    static lock = this.icon({ classname: 'lock' });
+    
+    static flag = this.icon({ classname: 'flag' });
+    
+    static headphones =  this.icon({ classname: 'headphones' });
+    
+    static volumeOff = this.icon({ classname: 'volume-off' });
+    
+    static volumeOff =  this.icon({ classname: 'volume-off' });
+    
+    static volumeOff = this.icon({ classname: 'volume-off' });
+    
+    static volumeDown=  this.icon({ classname: 'volume-down' });
+    
+    static volumeUp =  this.icon({ classname: 'qrcode' });
+    
+    static barcode =  this.icon({ classname: 'barcode' });
+    
+    static tag = this.icon({ classname: 'tag' });
+    
+    static tags = this.icon({ classname: 'tags' });
+    
+    static book =  this.icon({ classname: 'book' });
+    
+    static bookmark = this.icon({ classname: 'bookmark' });
+    
+    static print =  this.icon({ classname: 'print' });
+    
+    static camera = this.icon({ classname: 'camera' });
+    
+    static font =  this.icon({ classname: 'font' });
+    
+    static bold = this.icon({ classname: 'bold' });
+    
+    static italic =  this.icon({ classname: 'italic' });
+    
+    static textHeight =  this.icon({ classname: 'text-height' });
+    
+    static textWidth =  this.icon({ classname: 'text-width' });
+    
+    static alignLeft =  this.icon({ classname: 'align-left' });
+    
+    static alignCenter =  this.icon({ classname: 'align-center' });
+    
+    static alignRight =  this.icon({ classname: 'align-right' });
+    static alignJustify =  this.icon({ classname: 'align-justify' });
+    
+    static list =  this.icon({ classname: 'list' });
+    
+    static outdent =  this.icon({ classname: 'outdent' });
+    
+    static indent =  this.icon({ classname: 'indent' });
+    
+    static videoCamera =  this.icon({ classname: 'videa-camera' });
+    
+    static picture =  this.icon({ classname: 'picture-o' });
+    
+    static pencil =  this.icon({ classname: 'pencil' });
+    
+    static mapMarker = this.icon({ classname: 'map-marker' });
+    
+    static adjust =  this.icon({ classname: 'adjust' });
+    
+    static tint =  this.icon({ classname: 'tint' });
+    
+    static pencilSquare =  this.icon({ classname: 'pencil-square-o' });
+    
+    static shareSquare =  this.icon({ classname: 'share-square-o' });
+    
+    static checkSquare =  this.icon({ classname: 'check-square-o' });
+    
+    static arrows =  this.icon({ classname: 'arrows' });
+    
+    static stepBackward =  this.icon({ classname: 'step-backward' });
+    
+    static fastBackward =  this.icon({ classname: 'fast-backward' });
+    
+    static backward =  this.icon({ classname: 'backward' });
+    
+    static play =  this.icon({ classname: 'play' });
+    
+    static pause = this.icon({ classname: 'pause' });
+    
+    static stop = this.icon({ classname: 'stop' });
+    
+    static stepForward =  this.icon({ classname: 'step-forward' });
+    static fastForward =  this.icon({ classname: 'fast-forward' });
+    static forward =  this.icon({ classname: 'forward' });
+    static forward =  this.icon({ classname: 'eject' });
+    static chevronLeft =  this.icon({ classname: 'chevron-left' });
+    static chevronRight =  this.icon({ classname: 'chevron-right' });
+    static forward =  this.icon({ classname: 'forward' });
+    static forward =  this.icon({ classname: 'forward' });
+    
 }

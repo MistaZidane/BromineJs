@@ -23,7 +23,7 @@ function name() {
 }
 
 function Body() {
-    return Icons.home()
+    return Icons.home
     // return Popover.Top({
     //     text: 'how are you',
     //     title: 'popover',
