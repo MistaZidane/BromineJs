@@ -16,14 +16,17 @@ function name() {
         data.push(Card({
             image: 'https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg',
             text: 'How are you',
-            title: 'Testing'
+            title: 'Testing',
         }))
     }
     return data;
 }
 
 function Body() {
-    return Icons.lock
+    return Grid({
+        size:[4,4,4],
+        children:name()
+    })
     // return Popover.Top({
     //     text: 'how are you',
     //     title: 'popover',
