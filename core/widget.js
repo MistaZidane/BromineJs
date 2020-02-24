@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Loop, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid };
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer,Timeout };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -143,7 +143,7 @@ class Colors {
 // Text widget
 function Text({ text, tagtype, color, bgColor, id, className }) {
     // listing all the posible tags
-    let supportedTextTags = ['h1', 'h2', 'h3', 'h3', 'h5', 'h6', 'b', 'i', 'em', 'small', 'p', 'pre', 's', 'span'];
+    let supportedTextTags = ['h1', 'h2', 'h3', 'h3', 'h5', 'h6', 'b', 'i', 'em', 'small', 'p', 'pre', 's', 'span','strong'];
     if (supportedTextTags.includes(tagtype)) {
         let textWidget = new Widget();
         textWidget.type = tagtype;
@@ -152,7 +152,7 @@ function Text({ text, tagtype, color, bgColor, id, className }) {
         textWidget.id = id;
         textWidget.className = className;
         let ele = textWidget.CreateWidget();
-        ele.innerHTML = text;
+        ele.append(text);
         return ele;
     }
     // sending out error messages to help
@@ -237,7 +237,7 @@ function Anchor({ href, children, download, target, color, bgColor, id, classNam
         return ele;
     }
     else {
-        console.error('The child property for Anchor({}) is required');
+        console.error('The children property for Anchor({}) is required');
     }
 }
 // List widget
@@ -615,7 +615,7 @@ function Pre({ child, id, className }) {
 }
 
 // the RenderApp Widget for redering
-function RenderApp({ el, title, body }) {
+function RenderApp({ el, title, body, framework, style, links, script }) {
     try {
         let element = document.querySelector(el);
         element.innerHTML = '';
@@ -634,7 +634,7 @@ function Condition({ data, child }) {
         return child;
     }
 }
-// the loop Widget still working on it  
+// the loop Widget. still working on it  
 function Loop({ data, children }) {
     var value = 0;
     var index = 0;
@@ -675,15 +675,14 @@ function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color
         if (navbarNav != undefined) {
             if (typeof navbarNav == 'object') {
                 navbarNavState = true;
-                for (i = 0; i < navbarNav.items.length; i++) {
-                    console.log(typeof navbarNav.items[i])
+                for (let i = 0; i < navbarNav.items.length; i++) {
                     children.push(ListItem({
                         className: ['nav-item'],
                         children: [
                             Anchor({
                                 className: ['nav-link'],
                                 href: navbarNav.hrefs[i],
-                                child: navbarNav.items[i]
+                                children: [navbarNav.items[i]]
                             })
                         ]
                     }))
@@ -698,12 +697,11 @@ function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color
         if (dropdown != undefined) {
             if (typeof dropdown == 'object') {
                 dropdownState = true;
-                for (i = 0; i < dropdown.items.length; i++) {
-                    console.log(typeof dropdown.items[i])
+                for (let i = 0; i < dropdown.items.length; i++) {
                     children.push(Anchor({
                         className: ['dropdown-item'],
                         href: dropdown.hrefs[i],
-                        child: dropdown.items[i]
+                        children: [dropdown.items[i]]
                     }))
                 }
             }
@@ -713,7 +711,7 @@ function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color
             children: [
                 Anchor({
                     className: ['nav-link', 'dropdown-toggle'],
-                    child: 'Dropdown',
+                    children: ['Dropdown'],
                     id: 'navbarDropdown'
                 }),
                 Container({
@@ -768,7 +766,7 @@ function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color
                 child: Anchor({
                     className: ['navbar-brand'],
                     href: '#',
-                    child: brand
+                    children: [brand]
                 }),
             }),
             Condition({
@@ -791,7 +789,7 @@ function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color
                         List({
                             type: 'ul',
                             className: ['navbar-nav', 'mr-auto'],
-                            children: [maptolist, drop, inlineform].flat(2)
+                            children: [maptolist, Condition({data: dropdownState,child:drop}), inlineform].flat(2)
                         }),
                     ],
                     tagtype: 'div'
@@ -1342,4 +1340,620 @@ function Carousel({ images, controls, indicators, id, className, caption }) {
     return caro;
 }
 
-// make sure you implement carousel captions
+// the Collapse widget
+// ***
+//  **
+//   * 
+
+// saturday
+function Collapse({ button, child }) {
+    // the controller button
+    let btn;
+    if (button != undefined) {
+        btn = button;
+        try {
+            button.setAttribute('data-toggle', '#collapseExample');
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-controls', "collapseExample");
+        }
+        catch (err) {
+            console.error(err)
+        }
+    }
+    child.classList.add('collapse')
+    // the main container
+    let div = Container({
+        children: [
+            btn,
+            child
+        ],
+        tagtype: 'div',
+    })
+    if (child == undefined) {
+        console.error('The child property must be set');
+    }
+    else {
+        if (child.id == '') {
+            child.id = 'collapseExample';
+        }
+        else {
+            button.setAttribute('data-toggle', child.id);
+
+        }
+    }
+    return div;
+}
+// the dropdown widget
+function Dropdown({ button, data }) {
+    let btn;
+    let id;
+    if (button != undefined) {
+        try {
+            button.setAttribute('data-toggle', 'dropdown');
+            button.setAttribute('aria-haspopup', 'true');
+            button.setAttribute('aria-expanded', 'false');
+            if (button.id == '') {
+                button.setAttribute('id', 'dropdownMenuButton');
+                btn = button;
+                id = 'dropdownMenuButton';
+            }
+            else {
+                id = button.id;
+            }
+        }
+        catch (err) {
+
+        }
+    }
+    // function to produce the items
+    function dropMenuItext(href, text) {
+        return Anchor({
+            href: href,
+            children: [text],
+            className: ['dropdown-item']
+        })
+    }
+    // looping throug the data
+    let items = [];
+    if (data != undefined) {
+        if (typeof data == 'object') {
+            for (let i = 0; i < data.length; i++) {
+                items.push(dropMenuItext(data[i].href, data[i].text))
+            }
+        }
+    }
+    let dropmenu = Container({
+        tagtype: 'div',
+        children: items,
+        className: ['dropdown-menu']
+    })
+    dropmenu.setAttribute('aria-labelledby', id);
+
+    let element = Container({
+        tagtype: 'div',
+        children: [
+            btn,
+            dropmenu
+        ],
+        className: ['dropdown']
+    })
+    return element
+}
+// the Jumbotron widget
+function Jumbotron({ className, children, id, fluid }) {
+    let classes = [];
+    let content = [];
+    let jumclass = ['jumbotron']
+    if (className != undefined) {
+        classes = className
+    }
+    if (children != undefined) {
+        content = children
+    }
+    if (fluid == true) {
+        jumclass = ['jumbotron', 'jumbotron-fluid']
+    }
+    return Container({
+        children: content,
+        tagtype: 'div',
+        className: jumclass.concat(classes),
+        id: id
+    })
+}
+// the list group widget
+// ############    ||
+// *************** ||
+// ############    ||\
+
+function ListGroup({ children, className, id, itemClick = (index, ele) => { } }) {
+    let classes = [];
+    let content = [];
+
+    if (className != undefined) {
+        classes = ['list-group'].concat(className);
+    }
+    else {
+        classes = ['list-group']
+    }
+    if (children != undefined) {
+        content = children
+    }
+    let list = List({
+        className: classes,
+        children: content,
+        id: id
+    });
+    // automaticticalyy adding event listeners to them passing the index to it
+    for (let i = 0; i < list.children.length; i++) {
+        list.children[i].addEventListener('click', () => {
+            itemClick(i, list.children[i]);
+        })
+    }
+    return list;
+}
+
+// the list group item widget
+function ListGroupItem({ className, id, children }) {
+    let classes = [];
+    let content = [];
+    if (className != undefined) {
+        classes = ['list-group-item'].concat(className);
+    }
+    else {
+        classes = ['list-group-item']
+    }
+    if (children != undefined) {
+        content = children
+    }
+    let listitem = ListItem({
+        children: content,
+        id: id,
+        className: classes
+    })
+    return listitem;
+}
+
+// the boostrap modal widget
+function Modal({ doneText, body, footer, title, button }) {
+    // checking the title
+    if (title == undefined) {
+        title = 'set your own title using the title property'
+    }
+    // setting up the button
+    if (button != undefined) {
+        button.setAttribute('data-toggle', 'modal');
+        button.setAttribute('data-target', '#exampleModalScrollable');
+    }
+    let closeText = Text({ tagtype: 'span', text: '&times;' });
+    closeText.setAttribute('aria-hidden', 'true');
+    let closeBtn = Btn({
+        child: closeText,
+        className: ['close'],
+
+    });
+    closeBtn.setAttribute('data-dismiss', 'modal');
+    closeBtn.setAttribute('arial-lable', 'close');
+    let modalFooter = Container({
+        children: footer,
+        className: ['modal-footer'],
+        tagtype: 'div'
+    })
+    let modalBody = Container({
+        children: body,
+        className: ['modal-body'],
+        tagtype: 'div'
+    });
+    let modalHeader = Container({
+        tagtype: 'div',
+        children: [
+            Text({ text: title, tagtype: 'h5', className: ['modal-title'], id: 'exampleModalScrollable' }),
+            closeBtn
+        ],
+        className: ['modal-header']
+    })
+    let modalContent = Container({
+        children: [modalHeader, modalBody, modalFooter],
+        className: ['modal-content'],
+        tagtype: 'div'
+    })
+    let modalDialog = Container({
+        tagtype: 'div',
+        children: [modalContent],
+        className: ['modal-dialog', 'modal-dialog-scrollable']
+    });
+    modalDialog.setAttribute('role', 'document');
+    let modal = Container({
+        tagtype: 'div',
+        children: [modalDialog],
+        className: ['modal', 'fade'],
+        id: 'exampleModalScrollable'
+    });
+    modal.setAttribute('tabindex', '-1');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-hidden', 'true');
+    return Container({
+        tagtype: 'div',
+        children: [
+            button,
+            modal
+        ]
+    })
+}
+// making the Attr widget used in setting attributes
+function Attr({ prop, value, child }) {
+    if (prop != undefined && value != undefined && child != undefined) {
+        child.setAttribute(prop, value);
+        return child;
+    }
+    else {
+        console.error('make sure prop, value and child in the Attr widget was set');
+    }
+}
+// the bootstrap Nav widget
+function Nav({ items, id, className, center, right, vertical, tabs, pills }) {
+    let children = [];
+    let classes = [];
+    if (className != undefined) {
+        classes = ['nav'].concat(className)
+    }
+    else {
+        classes = ['nav']
+    }
+    // checking if center is true so we can edit the classes
+    if (center == true) {
+        classes.push('justify-content-center')
+    }
+    // if right is true
+    if (right == true) {
+        classes.push('justify-content-end')
+    }
+    // if center and right is true it should align right
+    // but the defalut alignment is left
+    if (center == true && right == true) {
+        classes.splice(classes.indexOf('justify-content-center'), classes.indexOf('justify-content-center'))
+        classes.push('justify-content-end');
+    }
+    // checking for verticallity
+    if (vertical == true) {
+        classes.push('flex-column')
+    }
+    // checking if it tabs or pills
+    if (tabs == true) {
+        classes.push('nav-tabs')
+    }
+    if (pills == true) {
+        classes.push('nav-pills')
+    }
+    // removing tabs so as to enable only one class
+    if (pills == true && tabs == true) {
+        classes.splice(classes.indexOf('nav-tabs'), classes.indexOf('nav-tabs'))
+    }
+    if (items != undefined) {
+        children = items;
+    }
+
+    return Container({
+        tagtype: 'nav',
+        children: children,
+        className: classes,
+        id: id
+    })
+}
+// the boostrap navItem widget
+function NavItem({ href, text, active, className }) {
+    let acti = ['nav-link'];
+    if (active == true) {
+        acti = ['nav-link', 'active'];
+    }
+    let classes = [];
+
+    if (className != undefined) {
+        classes = ['nav-item'].concat(className)
+    }
+    else {
+        classes = ['nav-item']
+    }
+    return ListItem({
+        children: [Anchor({
+            href: href,
+            children: [text],
+            className: acti
+        })],
+        className: classes
+    })
+}
+// the Pagination widget
+function Pagination({ className, id, Items }) {
+    let classes = ['pagination'];
+    if (className != undefined) {
+        classes.concat(className);
+    }
+    let element = Container({
+        tagtype: 'nav',
+        children: [
+            List({
+                type: 'ul',
+                children: Items,
+                className: classes
+            })
+        ]
+    });
+    element.setAttribute('arail-lable', 'page pagination');
+    return element
+}
+// the PageItem widget
+function PageItem({ id, className, href, text }) {
+    let classes = ['page-item'];
+    if (className != undefined) {
+        classes.concat(className);
+    }
+    let element = ListItem({
+        children: [
+            Anchor({
+                href: href,
+                children: [text],
+                className: ['page-link']
+            })
+        ],
+        className: ['page-item']
+    });
+    return element
+}
+// the Popover widget
+// ##################
+//  """"""""""""""""""""
+// -----++++++++#####$$$%%
+
+class Popover {
+    static popover({ title, text, content, click, placement }) {
+        let element = Button.primary({
+            child: text,
+            click: click,
+        });
+        element.setAttribute('data-container', 'body');
+        element.setAttribute('data-toggle', 'popover');
+        element.setAttribute('data-placement', placement);
+        element.setAttribute('data-content', content);
+        element.setAttribute('title', title);
+        return element;
+    }
+    static Top = ({ title, text, content, click }) => {
+        return this.popover({ title: title, text: text, click: click, placement: 'top', content: content });
+    }
+    static Bottom = ({ title, text, content, click }) => {
+        return this.popover({ title: title, text: text, click: click, placement: 'bottom', content: content });
+    }
+    static Right = ({ title, text, content, click }) => {
+        return this.popover({ title: title, text: text, click: click, placement: 'right', content: content });
+    }
+    static Left = ({ title, text, content, click }) => {
+        return this.popover({ title: title, text: text, click: click, placement: 'left', content: content });
+    }
+}
+// the Progress widget
+//####################
+class Progress {
+    static progr({ id, className, value, min, max, height, striped }) {
+        className.push('progress-bar');
+        if (striped == true) {
+            className.push('progress-bar-striped');
+        }
+        let element = Container({
+            tagtype: 'div',
+            children: [],
+            className: className
+        });
+        element.setAttribute('role', "progressbar");
+        element.setAttribute('style', `width: ${value}%`);
+        element.setAttribute('aria-valuenow', value);
+        element.setAttribute('aria-valuemin', min);
+        element.setAttribute('aria-valuemax', max);
+        let contaner = Container({
+            tagtype: 'div',
+            className: ['progress'],
+            children: [
+                element,
+            ]
+        });
+        if (typeof height == 'number') {
+            contaner.style.height = height + 'px';
+        }
+        return contaner;
+    }
+    static info = ({ id, className, value, min, max, height, striped }) => {
+        let classes = ['bg-info'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.progr({ id: id, className: classes, value: value, min: min, max: max, height: height, striped: striped });
+    }
+    static succes = ({ id, className, value, min, max, height, striped }) => {
+        let classes = ['bg-success'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.progr({ id: id, className: classes, value: value, min: min, max: max, height: height, striped: striped });
+    }
+    static danger = ({ id, className, value, min, max, height, striped }) => {
+        let classes = ['bg-danger'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.progr({ id: id, className: classes, value: value, min: min, max: max, height: height, striped: striped });
+    }
+    static warning = ({ id, className, value, min, max, height, striped }) => {
+        let classes = ['bg-warning'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.progr({ id: id, className: classes, value: value, min: min, max: max, height: height, striped: striped });
+    }
+
+}
+// the Spinner widget
+class Spinner {
+    static spin({ grow, className, id }) {
+
+        let classes = ['spinner-border'];
+        if (grow == true) {
+            classes[0] = 'spinner-grow'
+        }
+        classes = classes.concat(className)
+        let element = Container({
+            children: [
+                Container({
+                    children: ['loading'],
+                    tagtype: 'span',
+                    className: ['sr-only']
+                })
+            ],
+            tagtype: 'div',
+            className: classes,
+            id: id
+        });
+        return element;
+    }
+    static primary = ({ grow, className, id }) => {
+        let classes = ['text-primary'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+    static success = ({ grow, className, id }) => {
+        let classes = ['text-success'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+    static info = ({ grow, className, id }) => {
+        let classes = ['text-info'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+    static danger = ({ grow, className, id }) => {
+        let classes = ['text-danger'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+    static warning = ({ grow, className, id }) => {
+        let classes = ['text-warning'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+    static light = ({ grow, className, id }) => {
+        let classes = ['text-light'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+    static dark = ({ grow, className, id }) => {
+        let classes = ['text-dark'];
+        if (className != undefined) {
+            classes.concat(className);
+        }
+        return this.spin({ grow: grow, className: classes, id: id });
+    }
+}
+// the toast widget
+function Toast({id,className,title,text,subtitle, img}) {
+    let titleState = false;
+    let subtitleState = false;
+    if(title != undefined){
+        titleState = true;
+    }
+    if(subtitle != undefined){
+        subtitleState = true;
+    }
+    let imgState = false;
+    if(img != undefined){
+        imgState = true;
+    }
+    else{
+        img = ''
+    }
+    console.log(imgState)
+    let closeBtn = Btn({
+        className:['ml-2','mb-1','close'],
+        child:Text({
+            tagtype:'span',text:'&times;'
+        })
+    });
+    closeBtn.setAttribute('type','button');
+    closeBtn.setAttribute('data-dismiss','toast');
+    closeBtn.setAttribute('aria-lable','close');
+    let toastHeader  = Container({
+        tagtype: 'div',
+        className: ['toast-header'],
+        children:[
+            Condition({
+                data:imgState,
+                child: Image({
+                    src:img,
+                    className:['rounded', 'mr-2']
+                })
+            }),
+            Condition({
+                data: titleState,
+                child: Text({text: title, tagtype:'strong'}),
+            }),
+            Condition({
+                data: subtitleState,
+                child:  Text({text: subtitle, tagtype:'small'})
+            }),
+            closeBtn
+        ]
+    })
+    let classes = ['toast'];
+    if(className != undefined){
+        classes.concat(className);
+    }
+    let toastBody = Container({
+        tagtype:'div',
+        className:['toast-body'],
+        children: [text]
+    })
+    let element = Container({
+        tagtype: 'div',
+        children:[
+            toastHeader,
+            toastBody
+        ],
+        className:classes
+    });
+    element.setAttribute('role','alert');
+    element.setAttribute('aria-alive','assertive');
+    element.setAttribute('aria-atomic','true');
+    return element;
+}  
+// the Timer widget
+function Timer({milisecs,ondone = ()=>{}, child}) {
+    if(typeof milisecs == 'number'){
+        setInterval(()=>{
+            ondone()
+        },milisecs);
+        return child;
+    }
+}
+// the timeout widget
+function Timeout({milisecs,ondone = (child)=>{}, child}) {
+    if(typeof milisecs == 'number'){
+        setTimeout(()=>{
+            ondone(child)
+        },milisecs);
+        return child;
+    }
+}
+// the Icons widget
+// this widget will provide you with a quick way to have icons to you app
+class Icons{
+
+}

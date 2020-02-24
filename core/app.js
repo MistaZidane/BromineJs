@@ -1,15 +1,18 @@
-import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid } from './widget.js'
-
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem,Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout } from './widget.js'
 
 RenderApp({
     el: '#el',
     body: Body(),
-    title: 'Mista Zidane'
+    title: 'Mista Zidane',
+    style: [],
+    links:[],
+    script:[],
+    framework:''
 })
 
 function name() {
     let data = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 8; i++) {
         data.push(Card({
             image: 'https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg',
             text: 'How are you',
@@ -20,21 +23,20 @@ function name() {
 }
 
 function Body() {
-    return Grid({
-        size: [2,8,2],
-        children: [
-            Line({}),
-            Carousel({
-                indicators: true,
-                caption: [
-                    {subtitle:'How are you',title: 'Texting ddd'},
-                    {subtitle:'How are you doing',title: 'Texting'},
-                ],
-                
-                images:['https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg','https://picjumbo.com/wp-content/uploads/free-stock-images-1080x720.jpg'],
-                controls: true
-            })
-        ]
+    return Timeout({
+        milisecs: 2000,
+        child:Text({tagtype:'p',text:'how are you'}),
+        ondone: (child)=>{
+            child.innerHTML = 'scs scsd'
+        }
     })
+    // return Popover.Top({
+    //     text: 'how are you',
+    //     title: 'popover',
+    //     content:'my content',
+    //     click: ()=>{
+    //         console.log('how are uuuuu');
+    //     }
+    // })
 }
 
