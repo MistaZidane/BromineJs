@@ -634,21 +634,6 @@ function Condition({ data, child }) {
         return child;
     }
 }
-// the loop Widget. still working on it  
-function Loop({ data, children }) {
-    var value = 0;
-    var index = 0;
-    if (data != undefined) {
-        if (typeof data == 'object') {
-            data.forEach((value, index) => {
-                value = value;
-                index = index;
-                console.log(value)
-            })
-        }
-    }
-    return value, index
-}
 // now we would use boostrap for easy styling of our widgets
 // we will be using boostrap for easy styling
 // #          #
@@ -1952,6 +1937,7 @@ function Timeout({ milisecs, ondone = (child) => { }, child }) {
 }
 // the Icons widget
 // this widget will provide you with a quick way to have icons to you app
+// we are using font awesome icons 
 class Icons {
     // the setup for icons
     static icon({ classname }) {
@@ -1962,6 +1948,7 @@ class Icons {
         ele.setAttribute('aria-hidden', 'true');
         return ele;
     }
+    // making the icons
     static home = this.icon({ classname: 'home' });
     static telegram = this.icon({ classname: 'telegram' });
     static glass = this.icon({ classname: 'glass' });
