@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Loop, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer,Timeout };
+export { RenderApp, Container, Button, Condition, Loop, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -143,7 +143,7 @@ class Colors {
 // Text widget
 function Text({ text, tagtype, color, bgColor, id, className }) {
     // listing all the posible tags
-    let supportedTextTags = ['h1', 'h2', 'h3', 'h3', 'h5', 'h6', 'b', 'i', 'em', 'small', 'p', 'pre', 's', 'span','strong'];
+    let supportedTextTags = ['h1', 'h2', 'h3', 'h3', 'h5', 'h6', 'b', 'i', 'em', 'small', 'p', 'pre', 's', 'span', 'strong'];
     if (supportedTextTags.includes(tagtype)) {
         let textWidget = new Widget();
         textWidget.type = tagtype;
@@ -789,7 +789,7 @@ function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color
                         List({
                             type: 'ul',
                             className: ['navbar-nav', 'mr-auto'],
-                            children: [maptolist, Condition({data: dropdownState,child:drop}), inlineform].flat(2)
+                            children: [maptolist, Condition({ data: dropdownState, child: drop }), inlineform].flat(2)
                         }),
                     ],
                     tagtype: 'div'
@@ -1864,96 +1864,106 @@ class Spinner {
     }
 }
 // the toast widget
-function Toast({id,className,title,text,subtitle, img}) {
+function Toast({ id, className, title, text, subtitle, img }) {
     let titleState = false;
     let subtitleState = false;
-    if(title != undefined){
+    if (title != undefined) {
         titleState = true;
     }
-    if(subtitle != undefined){
+    if (subtitle != undefined) {
         subtitleState = true;
     }
     let imgState = false;
-    if(img != undefined){
+    if (img != undefined) {
         imgState = true;
     }
-    else{
+    else {
         img = ''
     }
     console.log(imgState)
     let closeBtn = Btn({
-        className:['ml-2','mb-1','close'],
-        child:Text({
-            tagtype:'span',text:'&times;'
+        className: ['ml-2', 'mb-1', 'close'],
+        child: Text({
+            tagtype: 'span', text: '&times;'
         })
     });
-    closeBtn.setAttribute('type','button');
-    closeBtn.setAttribute('data-dismiss','toast');
-    closeBtn.setAttribute('aria-lable','close');
-    let toastHeader  = Container({
+    closeBtn.setAttribute('type', 'button');
+    closeBtn.setAttribute('data-dismiss', 'toast');
+    closeBtn.setAttribute('aria-lable', 'close');
+    let toastHeader = Container({
         tagtype: 'div',
         className: ['toast-header'],
-        children:[
+        children: [
             Condition({
-                data:imgState,
+                data: imgState,
                 child: Image({
-                    src:img,
-                    className:['rounded', 'mr-2']
+                    src: img,
+                    className: ['rounded', 'mr-2']
                 })
             }),
             Condition({
                 data: titleState,
-                child: Text({text: title, tagtype:'strong'}),
+                child: Text({ text: title, tagtype: 'strong' }),
             }),
             Condition({
                 data: subtitleState,
-                child:  Text({text: subtitle, tagtype:'small'})
+                child: Text({ text: subtitle, tagtype: 'small' })
             }),
             closeBtn
         ]
     })
     let classes = ['toast'];
-    if(className != undefined){
+    if (className != undefined) {
         classes.concat(className);
     }
     let toastBody = Container({
-        tagtype:'div',
-        className:['toast-body'],
+        tagtype: 'div',
+        className: ['toast-body'],
         children: [text]
     })
     let element = Container({
         tagtype: 'div',
-        children:[
+        children: [
             toastHeader,
             toastBody
         ],
-        className:classes
+        className: classes
     });
-    element.setAttribute('role','alert');
-    element.setAttribute('aria-alive','assertive');
-    element.setAttribute('aria-atomic','true');
+    element.setAttribute('role', 'alert');
+    element.setAttribute('aria-alive', 'assertive');
+    element.setAttribute('aria-atomic', 'true');
     return element;
-}  
+}
 // the Timer widget
-function Timer({milisecs,ondone = ()=>{}, child}) {
-    if(typeof milisecs == 'number'){
-        setInterval(()=>{
+function Timer({ milisecs, ondone = () => { }, child }) {
+    if (typeof milisecs == 'number') {
+        setInterval(() => {
             ondone()
-        },milisecs);
+        }, milisecs);
         return child;
     }
 }
 // the timeout widget
-function Timeout({milisecs,ondone = (child)=>{}, child}) {
-    if(typeof milisecs == 'number'){
-        setTimeout(()=>{
+function Timeout({ milisecs, ondone = (child) => { }, child }) {
+    if (typeof milisecs == 'number') {
+        setTimeout(() => {
             ondone(child)
-        },milisecs);
+        }, milisecs);
         return child;
     }
 }
 // the Icons widget
 // this widget will provide you with a quick way to have icons to you app
-class Icons{
-
+class Icons {
+  static icon({ classname }) {
+        let i = new Widget();
+        i.type = 'i';
+        i.className = ['fa', `fa-${classname}`];
+        let ele = i.CreateWidget();
+        ele.setAttribute('aria-hidden', 'true');
+        return ele;
+    }
+    static home = () => {
+       return this.icon({classname: 'home'});
+    }
 }

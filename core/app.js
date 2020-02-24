@@ -1,4 +1,4 @@
-import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem,Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout } from './widget.js'
+import { RenderApp, Container, Button, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem,Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js'
 
 RenderApp({
     el: '#el',
@@ -23,13 +23,7 @@ function name() {
 }
 
 function Body() {
-    return Timeout({
-        milisecs: 2000,
-        child:Text({tagtype:'p',text:'how are you'}),
-        ondone: (child)=>{
-            child.innerHTML = 'scs scsd'
-        }
-    })
+    return Icons.home()
     // return Popover.Top({
     //     text: 'how are you',
     //     title: 'popover',
