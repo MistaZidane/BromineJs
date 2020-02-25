@@ -1,4 +1,4 @@
-export { RenderApp, Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
+export { RenderApp,Btn,  Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
 
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -1468,6 +1468,7 @@ function ListGroup({ children, className, id, itemClick = (index, ele) => { } })
     });
     // automaticticalyy adding event listeners to them passing the index to it
     for (let i = 0; i < list.children.length; i++) {
+        console.log(list.children)
         list.children[i].addEventListener('click', () => {
             itemClick(i, list.children[i]);
         })
