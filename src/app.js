@@ -9,7 +9,7 @@ RenderApp({
     style: [],
     links: [],
     script: [],
-    framework: ''
+    framework: 'boostrap'
 })
 
 function name() {

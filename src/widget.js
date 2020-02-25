@@ -615,7 +615,7 @@ function Pre({ child, id, className }) {
 }
 
 // the RenderApp Widget for redering
-function RenderApp({ el, title, body, framework, style, links, script }) {
+function RenderApp({ el, title, body, framework = 'boostrap', style, links, script }) {
     try {
         let element = document.querySelector(el);
         element.innerHTML = '';
@@ -912,11 +912,13 @@ class Alert {
         return this.normalalert(['alert-dark'].concat(className), child, id);
     }
 }
-// the boostrap badge Widget
-//#############
-// ####
-//  ##
-//   #########
+
+/**  
+ *** Boostrap Badge Widget *** 
+ *
+ * 
+ * 
+**/
 
 class Badge {
     static normalBadge = (classname, child, id) => {
@@ -937,35 +939,28 @@ class Badge {
             id: id
         })
     }
-    // primary badge
+
     static primary = ({ child, id, className }) => {
         return this.normalBadge(['badge-primary'].concat(className), child, id)
     }
-    // secondary badge
     static secondary = ({ child, id, className }) => {
         return this.normalBadge(['badge-secondary'].concat(className), child, id)
     }
-    // success badge
     static success = ({ child, id, className }) => {
         return this.normalBadge(['badge-success'].concat(className), child, id)
     }
-    // danger badge
     static danger = ({ child, id, className }) => {
         return this.normalBadge(['badge-danger'].concat(className), child, id)
     }
-    // warning badge
     static warning = ({ child, id, className }) => {
         return this.normalBadge(['badge-warning'].concat(className), child, id)
     }
-    // info badge
     static info = ({ child, id, className }) => {
         return this.normalBadge(['badge-info'].concat(className), child, id)
     }
-    // light badge
     static light = ({ child, id, className }) => {
         return this.normalBadge(['badge-light'].concat(className), child, id)
     }
-    // dark badge
     static dark = ({ child, id, className }) => {
         return this.normalBadge(['badge-dark'].concat(className), child, id);
     }
@@ -973,6 +968,8 @@ class Badge {
 // the boostrap button class
 // do not mistake it for the Button function
 class Button {
+    bulma = {primary:'is-primary', info:'is-info', success:'is-success', danger:'is-danger', warning:'is-warning'}
+    boostrap = {primary:'btn-primary', secondary:'btn-seconday', info:'btn-info', success:'btn-success', danger:'btn-danger', warning:'btn-warning'}
     static normalButton = (classname, child, id, click, hover) => {
         let classes = [];
         if (classname[1] != undefined) {
