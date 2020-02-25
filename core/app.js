@@ -1,5 +1,5 @@
-import { RenderApp, Container, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
-import {Button} from './bulma.js'
+import { RenderApp, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
+import {Button, ButtonGroup} from './bulma.js'
 
 RenderApp({
     el: '#el',
@@ -29,42 +29,14 @@ function Body() {
     return Container({
         tagtype:'div',
         children:[
-            Button.danger({child:'how', click:()=>{console.log('how are you')}}),
-            Button.primary({child:'how'}),
-            Button.outlineDark({child:'how'}),
+           ButtonGroup({
+               buttons:[
+                Button.outlineSecondary({child:'how', click:()=>{console.log('how are you')}}),
+                Button.primary({child:'how'}),
+                Button.outlineDark({child:'how'}),
+               ]
+           }),
             Icons.home,
-            ListGroup({
-                itemClick: (index,ele)=>{
-console.log(index,' has been clicked')
-                },
-                children:[
-                    ListGroupItem({
-                        children:[
-                            Text({tagtype:'p', text: 'how are you'})
-                        ]
-                    }),
-                    ListGroupItem({
-                        children:[
-                            Text({tagtype:'p', text: 'how are you'})
-                        ]
-                    }),
-                    ListGroupItem({
-                        children:[
-                            Text({tagtype:'p', text: 'how are you'})
-                        ]
-                    }),
-                    ListGroupItem({
-                        children:[
-                            Text({tagtype:'p', text: 'how are you'})
-                        ]
-                    }),
-                    ListGroupItem({
-                        children:[
-                            Text({tagtype:'p', text: 'how are you'})
-                        ]
-                    }),
-                ]
-            })
         ]
     })
     // return Popover.Top({

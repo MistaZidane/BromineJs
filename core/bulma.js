@@ -1,6 +1,6 @@
-import { RenderApp,Btn, Container, Condition, Gesture, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
+import { RenderApp,Btn, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
 // the bulma button widget
-export {Button}
+export {Button, ButtonGroup}
 class Button {
     static normalButton = (classname, child, id, click, hover) => {
         let classes = [];
@@ -27,7 +27,7 @@ class Button {
     }
     // secondary Button
     static secondary = ({ child, id, click, hover, classname }) => {
-        return this.normalButton(['is-secondary'].concat(classname), child, id, click, hover)
+        return this.normalButton(classname, child, id, click, hover)
     }
     // success Button
     static success = ({ child, id, click, hover, classname }) => {
@@ -61,7 +61,7 @@ class Button {
     }
     // secondary outline Button
     static outlineSecondary = ({ child, id, click, hover, classname }) => {
-        return this.normalButton(['is-secondary','is-outlined'].concat(classname), child, id, click, hover)
+        return this.normalButton(['is-outlined'].concat(classname), child, id, click, hover)
     }
     // success outline Button
     static outlineSuccess = ({ child, id, click, hover, classname }) => {
@@ -87,4 +87,38 @@ class Button {
     static outlineDark = ({ child, id, click, hover, classname }) => {
         return this.normalButton(['is-dark','is-outlined'].concat(classname), child, id, click, hover);
     }
+}
+
+// the Bulma ButtonGroup Widget
+//#####
+//   #####
+// ########
+
+function ButtonGroup({ buttons, className, id, role }) {
+    let classes = [];
+    if (className != undefined) {
+        classes = ['buttons'].concat(className);
+    }
+    else {
+        classes = ['buttons']
+    }
+    // making sure and error should not be throwns
+    let btns = [];
+    if (buttons != undefined) {
+        btns = buttons
+    }
+    else {
+        btns = []
+    }
+    let element = Container({
+        tagtype: 'div',
+        children: btns,
+        className: classes,
+        id: id,
+    });
+    // setting the role of the button
+    if (role != undefined) {
+        element.setAttribute('role', role);
+    }
+    return element;
 }
