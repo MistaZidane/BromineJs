@@ -1,6 +1,6 @@
-import { RenderApp,Btn, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
+import { RenderApp,Btn, Container, Condition, Gesture, Colors, Alert, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
 // the bulma button widget
-export {Button, ButtonGroup}
+export {Button, ButtonGroup, Tag}
 class Button {
     static normalButton = (classname, child, id, click, hover) => {
         let classes = [];
@@ -121,4 +121,63 @@ function ButtonGroup({ buttons, className, id, role }) {
         element.setAttribute('role', role);
     }
     return element;
+}
+
+// the boostrap tag Widget
+//#############
+// ####
+//  ##
+//   #########
+
+class Tag {
+    static normalBadge = (classname, child, id) => {
+        let classes = [];
+        if (classname[1] != undefined) {
+            classes = classname;
+            classes.push('tag');
+        }
+        else {
+            classname.pop();
+            classes = classname;
+            classes.push('tag');
+        }
+        return Container({
+            className: classes,
+            tagtype: 'span',
+            children: [child],
+            id: id
+        })
+    }
+    // primary tag
+    static primary = ({ child, id, className }) => {
+        return this.normalBadge(['is-primary'].concat(className), child, id)
+    }
+    // secondary tag
+    static secondary = ({ child, id, className }) => {
+        return this.normalBadge(['is-secondary'].concat(className), child, id)
+    }
+    // success tag
+    static success = ({ child, id, className }) => {
+        return this.normalBadge(['is-success'].concat(className), child, id)
+    }
+    // danger tag
+    static danger = ({ child, id, className }) => {
+        return this.normalBadge(['is-danger'].concat(className), child, id)
+    }
+    // warning tag
+    static warning = ({ child, id, className }) => {
+        return this.normalBadge(['is-warning'].concat(className), child, id)
+    }
+    // info tag
+    static info = ({ child, id, className }) => {
+        return this.normalBadge(['is-info'].concat(className), child, id)
+    }
+    // light tag
+    static light = ({ child, id, className }) => {
+        return this.normalBadge(['is-light'].concat(className), child, id)
+    }
+    // dark tag
+    static dark = ({ child, id, className }) => {
+        return this.normalBadge(['is-dark'].concat(className), child, id);
+    }
 }

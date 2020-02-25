@@ -1,5 +1,5 @@
 import { RenderApp, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
-import {Button, ButtonGroup} from './bulma.js'
+import {Button, ButtonGroup, Tag} from './bulma.js'
 
 RenderApp({
     el: '#el',
@@ -29,13 +29,9 @@ function Body() {
     return Container({
         tagtype:'div',
         children:[
-           ButtonGroup({
-               buttons:[
-                Button.outlineSecondary({child:'how', click:()=>{console.log('how are you')}}),
-                Button.primary({child:'how'}),
-                Button.outlineDark({child:'how'}),
-               ]
-           }),
+          Tag.primary({
+              child:'twst'
+          }),
             Icons.home,
         ]
     })
