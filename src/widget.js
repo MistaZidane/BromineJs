@@ -622,7 +622,7 @@ function RenderApp({ el, title, body, framework, style, links, script }) {
         element.appendChild(body);
     }
     catch (err) {
-        console.error(err)
+        console.error(err, 'i am the one')
     }
     if (title != undefined) {
         document.querySelector('title').innerHTML = title;

@@ -1,10 +1,11 @@
 import { RenderApp, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
 import {Button, ButtonGroup, Tag} from './bulma.js'
 
+
 RenderApp({
     el: '#el',
     body: Body(),
-    title: 'Mista Zidane',
+    title: 'BromineJS',
     style: [],
     links: [],
     script: [],
@@ -29,19 +30,11 @@ function Body() {
     return Container({
         tagtype:'div',
         children:[
-          Tag.primary({
-              child:'twst'
-          }),
-            Icons.home,
+            Text({
+                tagtype:'p',
+                text:'test'
+            })
         ]
     })
-    // return Popover.Top({
-    //     text: 'how are you',
-    //     title: 'popover',
-    //     content:'my content',
-    //     click: ()=>{
-    //         console.log('how are uuuuu');
-    //     }
-    // })
 }
 

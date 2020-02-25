@@ -14,7 +14,7 @@ BromineJS is a JS framework that uses a JS-only and widget based approach to bui
 OS X & Linux:
 
 ```sh
-npm install bromine-todo --save
+npm install brominejs --save
 ```
 
 ## Usage example
