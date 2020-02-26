@@ -1,5 +1,5 @@
-import { RenderApp, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
-import {Button, ButtonGroup, Tag} from './bulma.js'
+import { RenderApp,Button, Container, Condition, Gesture, Colors, Alert, Badge, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons } from './widget.js';
+
 
 
 RenderApp({
@@ -9,7 +9,7 @@ RenderApp({
     style: [],
     links: [],
     script: [],
-    framework: 'boostrap'
+    framework: 'bootstrap'
 })
 
 function name() {
@@ -30,10 +30,10 @@ function Body() {
     return Container({
         tagtype:'div',
         children:[
-            Text({
-                tagtype:'p',
-                text:'test'
-            })
+            Alert.info({
+                child: Text({text:'how are you', tagtype:'p'})
+            }),
+            Button.secondary({child:'how'})
         ]
     })
 }

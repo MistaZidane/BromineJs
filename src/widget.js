@@ -1,5 +1,5 @@
 export { RenderApp,Btn,  Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
-
+let cssFramework =  ' ';
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
         this.child = child;
@@ -575,7 +575,6 @@ function Table({ headers, children, id, className }) {
     tbl.CreateChildren(children);
     return ele;
 }
-// the TableRow widget
 function TableRow({ children, id, className }) {
     let tr = new Widget();
     tr.type = 'tr';
@@ -583,7 +582,6 @@ function TableRow({ children, id, className }) {
     tr.CreateChildren(children);
     return ele;
 }
-// the TableCell()
 function TableCell({ child, id, className }) {
     let td = new Widget();
     td.type = 'td';
@@ -593,7 +591,6 @@ function TableCell({ child, id, className }) {
     }
     return ele;
 }
-// the Code() widget
 function Code({ child, id, className }) {
     let code = new Widget();
     code.type = 'code';
@@ -634,14 +631,13 @@ function Condition({ data, child }) {
         return child;
     }
 }
-// now we would use boostrap for easy styling of our widgets
-// we will be using boostrap for easy styling
-// #          #
-// #          ##
-// #          ###
-// #          #####
-// #          ######
-// the navbar widget
+
+/**  
+ *** Boostrap widgets start here *** 
+ *   We are using boostrap for easy styiling
+ * 
+ * 
+**/
 function Navbar({ brand, toogle, controls, left, size, navbarNav, bgColor, color, dropdown, form }) {
     let toogleState;
     let brandState;
@@ -971,6 +967,7 @@ class Button {
     bulma = {primary:'is-primary', info:'is-info', success:'is-success', danger:'is-danger', warning:'is-warning'}
     boostrap = {primary:'btn-primary', secondary:'btn-seconday', info:'btn-info', success:'btn-success', danger:'btn-danger', warning:'btn-warning'}
     static normalButton = (classname, child, id, click, hover) => {
+        console.log(cssFramework, 'ddv');
         let classes = [];
         if (classname[1] != undefined) {
             classes = classname;
@@ -2600,8 +2597,4 @@ class Icons {
     static superpowers = this.icon({ classname: 'superpowers' });
     static wpexplorer = this.icon({ classname: 'wpexplorer' });
     static meetup = this.icon({ classname: 'meetup' });
-    static modx = this.icon({ classname: 'modx' });
-    static modx = this.icon({ classname: 'modx' });
-    static modx = this.icon({ classname: 'modx' });
-    static modx = this.icon({ classname: 'modx' });
 }
