@@ -1,4 +1,4 @@
-export { RenderApp,Btn,  Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
+export { RenderApp,Btn,Break,Image, Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
 let cssFramework =  ' ';
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -144,6 +144,9 @@ class Colors {
 function Text({ text, tagtype, color, bgColor, id, className }) {
     // listing all the posible tags
     let supportedTextTags = ['h1', 'h2', 'h3', 'h3', 'h5', 'h6', 'b', 'i', 'em', 'small', 'p', 'pre', 's', 'span', 'strong'];
+    if(tagtype == undefined){
+        tagtype = 'p'
+    }
     if (supportedTextTags.includes(tagtype)) {
         let textWidget = new Widget();
         textWidget.type = tagtype;
@@ -165,6 +168,13 @@ function Text({ text, tagtype, color, bgColor, id, className }) {
         }
     }
 
+}
+// the break widget
+function Break() {
+    let br = new Widget()
+    br.type = 'br';
+    let ele = br.CreateWidget();
+    return ele;
 }
 // Button widget
 function Btn({ child, color, bgColor, click, hover, id, className }) {
@@ -189,6 +199,9 @@ function Container({ children, color, bgColor, tagtype, id, className }) {
     // supported tags
     // make sure you create the element before creating the children
     let supportedTags = ['div', 'span', 'nav', 'aside', 'section'];
+    if (tagtype == undefined) {
+        tagtype = 'div'
+    }
     if (supportedTags.includes(tagtype)) {
         let ctn = new Widget();
         ctn.type = tagtype;
@@ -202,12 +215,6 @@ function Container({ children, color, bgColor, tagtype, id, className }) {
     }
     // error messages for tagtype in Container
     else {
-        if (tagtype == null) {
-            console.error('The tagtype for Container({}) is required ');
-        }
-        else {
-            console.error('Make sure you are using a supported Container({}) tagtype');
-        }
     }
 }
 // The Anchor Widget
@@ -1075,8 +1082,8 @@ function ButtonGroup({ buttons, className, id, role }) {
     else {
         btns = []
     }
+    console.log(buttons)
     let element = Container({
-        tagtype: 'div',
         children: btns,
         className: classes,
         id: id,
