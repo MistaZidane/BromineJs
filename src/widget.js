@@ -1,4 +1,4 @@
-export { RenderApp,Btn,Break,Image, Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
+export { RenderApp,Btn,Test,Break,Image, Container, Button, Condition, Gesture, Navbar, Colors, Alert, Badge, ButtonGroup, Carousel, Line, Grid, Collapse, Text, Dropdown, Jumbotron, ListGroup, ListGroupItem, Modal, Attr, Nav, NavItem, Card, PageItem, Pagination, Popover, Progress, Spinner, Toast, Timer, Timeout, Icons };
 let cssFramework =  ' ';
 class Widget {
     constructor(type, child, color, bgColor, children, className, id) {
@@ -86,6 +86,10 @@ class Widget {
         this.element.value = value;
     }
 
+}
+var Test = function(){
+this.blue = 'blue';
+this.red = 'red';
 }
 // the Gesture class
 class Gesture {
@@ -1940,6 +1944,7 @@ function Timeout({ milisecs, ondone = (child) => { }, child }) {
 // the Icons widget
 // this widget will provide you with a quick way to have icons to you app
 // we are using font awesome icons 
+
 class Icons {
     // the setup for icons
     static icon({ classname }) {
