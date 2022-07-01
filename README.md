@@ -20,7 +20,20 @@ npm install brominejs --save
 ## Usage example
 
 A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
-
+Example Input code
+<img
+  src="brominejsUsage.png"
+  alt="Alt text"
+  title="Optional title"
+  style="display: inline-block; margin: 0 auto; max-width: 300px">
+  
+ Example Output code
+ 
+ <img
+  src="https://github.com/MistaZidane/BromineJs/blob/master/brominejs.png"
+  alt="Alt text"
+  title="Optional title"
+  style="display: inline-block; margin: 0 auto; max-width: 300px">
 _For more examples and usage, please refer to the [Wiki][wiki]._
 
 ## Development setup
@@ -41,15 +54,15 @@ npm test
 
 ## Meta
 
-Your Name – [@YourTwitter]() – YourEmail@example.com
+Your Name – [@mistazidane]() – mistazidane@gmail.com
 
 Distributed under the "TODO" license. See ``LICENSE`` for more information.
 
-[https://github.com/phantomzidane/BromineJs](https://github.com/phantomzidane/BromineJs)
+[https://github.com/mistazidane/BromineJs](https://github.com/mistazidane/BromineJs)
 
 ## Contributing
 
-1. Fork it [https://github.com/phantomzidane/BromineJs][()
+1. Fork it [https://github.com/mistazidane/BromineJs][()
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
